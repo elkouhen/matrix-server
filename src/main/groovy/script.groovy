@@ -14,7 +14,7 @@ def makeMatrix() {
 
     for (i = 0; i < m.getNx(); i++) {
         for (j = 0; j < m.getNx(); j++) {
-            m.set(i, j, i == j ? 1.0 / (j+1.0) : 0)
+            m.set(i, j, i == j ? 1.0 / (j + 1.0) : 0.0)
         }
     }
     return m
@@ -22,7 +22,7 @@ def makeMatrix() {
 
 def makeRequest(m, power) {
 
-    HttpPost multRequest = new HttpPost("http://localhost:8080/matrix/power");
+    HttpPost multRequest = new HttpPost("http://localhost:8080/matrix/v2/power");
     HttpClient client = HttpClientBuilder.create().build();
 
     def json = JsonOutput.toJson(new Pair(m, power))
