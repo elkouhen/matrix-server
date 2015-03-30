@@ -54,8 +54,8 @@ public class MatrixControllerImplV2 {
             }
 
             @Override
-            public void onSuccess(ResponseEntity<Matrix> result) {
-                deferredResult.setResult(matrixHelper.multiply(m.getLeft(), result.getBody()));
+            public void onSuccess(ResponseEntity<Matrix> response) {
+                deferredResult.setResult(matrixHelper.multiply(m.getLeft(), response.getBody()));
             }
         });
 
