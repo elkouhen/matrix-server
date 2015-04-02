@@ -1,8 +1,11 @@
 package com.softeam.formations.resources;
 
+
 import com.softeam.formations.resources.dto.Matrix;
 import com.softeam.formations.resources.dto.Pair;
 import com.softeam.formations.resources.helpers.MatrixHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -21,7 +24,7 @@ public class MatrixControllerImplV2 {
     public static final String MATRIX_RESOURCE_URL = "/matrix/v2";
     public static final String POWER = "/power";
     public static final String IDENTITY = "/identity";
-
+    private static final Logger logger = LoggerFactory.getLogger(MatrixControllerImplV2.class);
     @Autowired
     private AsyncRestTemplate restTemplate;
 
@@ -50,6 +53,8 @@ public class MatrixControllerImplV2 {
                 HttpMethod.POST, new HttpEntity<Object>(operation), Matrix.class).addCallback(new ListenableFutureCallback<ResponseEntity<Matrix>>() {
             @Override
             public void onFailure(Throwable ex) {
+
+                logger.error(ex.getMessage());
                 deferredResult.setErrorResult(ex.getMessage());
             }
 
