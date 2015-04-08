@@ -34,17 +34,14 @@ dependencies {
 
     compile('org.springframework.boot:spring-boot-starter-web') {
         exclude module: 'spring-boot-starter-tomcat'
-        // exclude module: 'spring-boot-starter-jetty'
     }
-
-    compile('org.springframework.boot:spring-boot-starter-undertow')
 
     compile 'ch.qos.logback:logback-classic:1.1.2'
     compile 'de.codecentric:spring-boot-admin-server:1.2.0'
     compile 'de.codecentric:spring-boot-admin-server-ui:1.2.0'
     compile 'de.codecentric:spring-boot-admin-starter-client:1.2.0'
-    //compile 'org.springframework.boot:spring-boot-starter-jetty'
     compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb")
     compile 'org.projectlombok:lombok:1.16.0'
     compile 'org.springframework:spring-web:4.1.5.RELEASE'
 }

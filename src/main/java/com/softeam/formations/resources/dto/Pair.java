@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by elkouhen on 25/03/15.
  */
-public class Pair<Left,Right> implements Serializable {
+public class Pair<Left, Right> implements Serializable {
     private Left left;
     private Right right;
 

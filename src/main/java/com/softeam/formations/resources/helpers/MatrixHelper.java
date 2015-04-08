@@ -1,6 +1,6 @@
 package com.softeam.formations.resources.helpers;
 
-import com.softeam.formations.resources.dto.Matrix;
+import com.softeam.formations.datalayer.dto.Matrix;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class MatrixHelper {
 
-    public Matrix identity(Matrix m){
+    public Matrix identity(Matrix m) {
 
         int nx = m.getNx();
 
-        for(int i = 0 ; i < nx; i++) {
-            for(int j = 0 ; j < nx; j++) {
-                m.set(i,j, i==j ? 1 : 0);
+        for (int i = 0; i < nx; i++) {
+            for (int j = 0; j < nx; j++) {
+                m.set(i, j, i == j ? 1 : 0);
             }
         }
 
@@ -27,15 +27,15 @@ public class MatrixHelper {
 
         Matrix result = new Matrix(nx);
 
-        for(int i = 0 ; i < nx; i++) {
-            for(int j = 0 ; j < nx; j++) {
+        for (int i = 0; i < nx; i++) {
+            for (int j = 0; j < nx; j++) {
 
                 float sum = 0;
-                for(int k = 0 ; k < nx ; k++) {
-                    sum += m.get(i,k) * n.get(k, j);
+                for (int k = 0; k < nx; k++) {
+                    sum += m.get(i, k) * n.get(k, j);
                 }
 
-                result.set(i,j, sum);
+                result.set(i, j, sum);
             }
         }
 

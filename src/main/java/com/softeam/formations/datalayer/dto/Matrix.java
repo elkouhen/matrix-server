@@ -1,4 +1,6 @@
-package com.softeam.formations.resources.dto;
+package com.softeam.formations.datalayer.dto;
+
+import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
 
@@ -6,6 +8,9 @@ import java.io.Serializable;
  * Created by elkouhen on 16/01/15.
  */
 public class Matrix implements Serializable {
+
+    @Id
+    private String id;
 
     private int nx;
     private float data[];
