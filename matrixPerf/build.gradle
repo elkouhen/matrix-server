@@ -1,10 +1,15 @@
 apply plugin: 'gatling'
+apply plugin: 'java'
 
 buildscript {
-    dependencies {
-        classpath group:'uk.gov', name:'gradle-gatling-plugin', version:'1.1'
-    }
     repositories {
+
         mavenLocal()
     }
+
+    dependencies {
+        classpath 'uk.gov:gradle-gatling-plugin:1.1'
+    }
+
+
 }

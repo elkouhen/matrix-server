@@ -35,7 +35,7 @@ public class MatrixControllerImplV1 {
             return m.getLeft();
         }
 
-        final Pair<Matrix, Integer> operation = new Pair<>(m.getLeft(), m.getRight() - 1);
+        final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(m.getLeft(), m.getRight() - 1);
 
         ResponseEntity<Matrix> response = restTemplate.exchange(MATRIX_RESOURCE_HOST + MATRIX_RESOURCE_URL + POWER,
                 HttpMethod.POST, new HttpEntity<Object>(operation), Matrix.class);

@@ -39,14 +39,14 @@ public class MatrixControllerImplV2 {
     @RequestMapping(value = POWER, method = RequestMethod.POST)
     public DeferredResult<Matrix> power(@RequestBody final Pair<Matrix, Integer> m) {
 
-        final DeferredResult<Matrix> deferredResult = new DeferredResult<>();
+        final DeferredResult<Matrix> deferredResult = new DeferredResult<Matrix>();
 
         if (m.getRight() == 1) {
             deferredResult.setResult(m.getLeft());
             return deferredResult;
         }
 
-        final Pair<Matrix, Integer> operation = new Pair<>(m.getLeft(), m.getRight() - 1);
+        final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(m.getLeft(), m.getRight() - 1);
 
         restTemplate.exchange(MATRIX_RESOURCE_HOST + MATRIX_RESOURCE_URL + POWER,
                 HttpMethod.POST, new HttpEntity<Object>(operation), Matrix.class).addCallback(new ListenableFutureCallback<ResponseEntity<Matrix>>() {
