@@ -1,0 +1,64 @@
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'com.bluepapa32.watch'
+
+
+// 08a06c7ea2561be08e766c581562cbb25ccb209a
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE'
+        classpath 'org.springframework:springloaded:1.2.1'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.7'
+        classpath 'com.bluepapa32:gradle-watch-plugin:0.1.4'
+    }
+}
+
+jar {
+    baseName = 'matrixServer'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    compile('org.springframework.boot:spring-boot-starter-web') {
+        exclude module: 'spring-boot-starter-tomcat'
+    }
+
+    compile 'ch.qos.logback:logback-classic:1.1.2'
+    compile 'de.codecentric:spring-boot-admin-server:1.2.0'
+    compile 'de.codecentric:spring-boot-admin-server-ui:1.2.0'
+    compile 'de.codecentric:spring-boot-admin-starter-client:1.2.0'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+    compile 'org.projectlombok:lombok:1.16.0'
+    compile 'org.springframework:spring-web:4.1.5.RELEASE'
+}
+
+springBoot {
+    mainClass = 'com.softeam.formations.application.Application'
+    //agent = file('/home/elkouhen/opt/newrelic/newrelic.jar')
+    //agent = file('/home/elkouhen/opt/appdynamics/javaagent.jar')
+}
+
+watch {
+
+    java {
+        files files('src/main/java')
+        tasks 'compileJava'
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.11'
+}

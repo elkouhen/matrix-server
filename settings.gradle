@@ -1,2 +1,3 @@
-rootProject.name = 'matrixServer'
+rootProject.name = 'matrixProject'
+include 'matrixServer', 'matrixPerf'
 
