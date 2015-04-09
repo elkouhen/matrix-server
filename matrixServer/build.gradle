@@ -51,8 +51,6 @@ dependencies {
 
 springBoot {
     mainClass = 'com.softeam.formations.application.Application'
-    //agent = file('/home/elkouhen/opt/newrelic/newrelic.jar')
-    //agent = file('/home/elkouhen/opt/appdynamics/javaagent.jar')
 }
 
 watch {
