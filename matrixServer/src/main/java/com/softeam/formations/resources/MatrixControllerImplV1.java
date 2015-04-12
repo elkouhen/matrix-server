@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-
-@RequestMapping(value = MatrixControllerImplV1.MATRIX_RESOURCE_URL, method = RequestMethod.POST)
+@RequestMapping(value = MatrixControllerImplV1.MATRIX_RESOURCE_URL)
 public class MatrixControllerImplV1 {
 
     public static final String MATRIX_RESOURCE_HOST = "http://localhost:8080";

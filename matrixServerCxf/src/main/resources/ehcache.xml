@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<ehcache updateCheck="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+        >
+
+    <diskStore path="/tmp/ehcache"/>
+
+    <defaultCache
+            eternal="true"
+            diskPersistent="true"
+            overflowToDisk="true"
+            maxEntriesLocalHeap="1000"/>
+
+    <cache name="ff4j-cache" eternal="true"
+           diskPersistent="true"
+           overflowToDisk="true"
+           maxEntriesLocalHeap="1000"
+           statistics="true" memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="ff4j" eternal="true"
+           diskPersistent="true"
+           overflowToDisk="true"
+           maxEntriesLocalHeap="1000"
+           statistics="true" memoryStoreEvictionPolicy="LRU"/>
+
+</ehcache>

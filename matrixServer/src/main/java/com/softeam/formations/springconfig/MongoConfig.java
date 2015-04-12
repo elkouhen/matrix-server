@@ -11,7 +11,8 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories(basePackages = "com.softeam.formations.datalayer.dao")
 public class MongoConfig {
 
-    public @Bean
+    public
+    @Bean
     MongoDbFactory mongoDbFactory() throws Exception {
         return new SimpleMongoDbFactory(new Mongo(), "matrix");
     }

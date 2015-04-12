@@ -4,3 +4,5 @@ gradle
 .idea
 .settings
 *.iml
+*.classpath
+*.project
