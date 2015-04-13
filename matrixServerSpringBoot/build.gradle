@@ -1,0 +1,63 @@
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'com.bluepapa32.watch'
+
+
+sourceCompatibility=1.8
+targetCompatibility=1.8
+
+buildscript {
+  repositories {
+    mavenCentral()
+    jcenter()
+  }
+
+  dependencies {
+   classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE'
+   classpath 'org.springframework:springloaded:1.2.1'
+   classpath 'com.github.ben-manes:gradle-versions-plugin:0.7'
+   classpath 'com.bluepapa32:gradle-watch-plugin:0.1.4'
+  }
+}
+
+sourceCompatibility=1.8
+targetCompatibility=1.8
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+
+  compile project(':matrixModel')
+  compile('org.springframework.boot:spring-boot-starter-web') {
+    exclude module: 'spring-boot-starter-tomcat'
+  }
+
+compile 'ch.qos.logback:logback-classic:1.1.2'
+compile 'de.codecentric:spring-boot-admin-server:1.2.0'
+compile 'de.codecentric:spring-boot-admin-server-ui:1.2.0'
+compile 'de.codecentric:spring-boot-admin-starter-client:1.2.0'
+compile 'org.springframework.boot:spring-boot-starter-actuator'
+compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
+compile 'org.springframework:spring-web:4.1.5.RELEASE'
+compile 'org.springframework:spring-context-support:4.1.5.RELEASE'
+}
+
+
+springBoot {
+mainClass = 'com.softeam.formations.application.Application'
+}
+
+watch {
+
+java {
+files files('src/main/java')
+tasks 'compileJava'
+}
+}
+
+task wrapper(type: Wrapper) {
+gradleVersion = '1.11'
+}

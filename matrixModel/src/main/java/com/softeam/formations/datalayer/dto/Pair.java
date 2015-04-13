@@ -1,4 +1,4 @@
-package com.softeam.formations.resources.dto;
+package com.softeam.formations.datalayer.dto;
 
 import java.io.Serializable;
 

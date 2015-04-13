@@ -1,0 +1,17 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+sourceCompatibility=1.8
+targetCompatibility=1.8
+
+repositories {
+   mavenCentral()
+}
+
+dependencies {
+   compile 'org.springframework.data:spring-data-mongodb:1.6.1.RELEASE'
+}
+
+jar {
+   //manifest.attributes provider: 'my cool company'
+}

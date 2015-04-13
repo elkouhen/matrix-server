@@ -1,8 +1,9 @@
 package com.softeam.formations.resources;
 
 import com.softeam.formations.datalayer.dto.Matrix;
-import com.softeam.formations.resources.dto.Pair;
+import com.softeam.formations.datalayer.dto.Pair;
 import com.softeam.formations.resources.helpers.MatrixHelper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -14,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@RequestMapping(value = MatrixControllerImplV1.MATRIX_RESOURCE_URL)
-public class MatrixControllerImplV1 {
+@RequestMapping(value = MatrixResourceImplV1.MATRIX_RESOURCE_URL)
+public class MatrixResourceImplV1 {
 
     public static final String MATRIX_RESOURCE_HOST = "http://localhost:8080";
     public static final String MATRIX_RESOURCE_URL = "/matrix/v1";
