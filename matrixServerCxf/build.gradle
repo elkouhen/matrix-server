@@ -19,7 +19,8 @@ repositories {
 }
 
 dependencies {
- 
+ compile project(':matrixModel')
+ compile 'com.ning:async-http-client:1.9.15'
  compile 'org.springframework:spring-web:4.0.3.RELEASE'
  compile 'org.springframework:spring-context-support:4.1.4.RELEASE'
  compile 'org.apache.cxf:cxf-rt-frontend-jaxrs:2.7.10'
