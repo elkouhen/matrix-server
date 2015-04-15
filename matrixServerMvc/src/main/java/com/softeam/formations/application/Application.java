@@ -15,15 +15,16 @@ import org.springframework.context.event.ContextClosedEvent;
 @ComponentScan("com.softeam")
 public class Application {
 
-    public static void main(String[] args) {
-        ConfigurableApplicationContext cac =  SpringApplication.run(Application.class, args);
+	public static void main(String[] args) {
+		ConfigurableApplicationContext cac = SpringApplication.run(
+				Application.class, args);
 
-        cac.addApplicationListener(new ApplicationListener<ContextClosedEvent>() {
+		cac.addApplicationListener(new ApplicationListener<ContextClosedEvent>() {
 
-            @Override
-            public void onApplicationEvent(ContextClosedEvent event) {
-               
-            }
-        });
-    }
+			@Override
+			public void onApplicationEvent(ContextClosedEvent event) {
+
+			}
+		});
+	}
 }

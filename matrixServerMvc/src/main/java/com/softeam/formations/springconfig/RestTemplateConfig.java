@@ -16,30 +16,30 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class RestTemplateConfig {
 
-    @Bean
-    public HttpClient httpClient() {
+	@Bean
+	AsyncRestTemplate asyncRestTemplate() {
+		return new AsyncRestTemplate();
+	}
 
-        PoolingHttpClientConnectionManager manager = new PoolingHttpClientConnectionManager();
+	@Bean
+	public HttpClient httpClient() {
 
-        final HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+		PoolingHttpClientConnectionManager manager = new PoolingHttpClientConnectionManager();
 
-        final CloseableHttpClient client = httpClientBuilder.build();
+		final HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
-        return client;
-    }
+		final CloseableHttpClient client = httpClientBuilder.build();
 
-    @Bean
-    public HttpComponentsClientHttpRequestFactory httpRequestFactory() {
-        return new HttpComponentsClientHttpRequestFactory(httpClient());
-    }
+		return client;
+	}
 
-    @Bean
-    RestTemplate restTemplate() {
-        return new RestTemplate(httpRequestFactory());
-    }
+	@Bean
+	public HttpComponentsClientHttpRequestFactory httpRequestFactory() {
+		return new HttpComponentsClientHttpRequestFactory(httpClient());
+	}
 
-    @Bean
-    AsyncRestTemplate asyncRestTemplate() {
-        return new AsyncRestTemplate();
-    }
+	@Bean
+	RestTemplate restTemplate() {
+		return new RestTemplate(httpRequestFactory());
+	}
 }

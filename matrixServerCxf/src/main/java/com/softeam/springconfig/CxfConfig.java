@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ImportResource;
  * configuration des services SOAP et REST, le cas échéant.
  */
 @Configuration
-@ImportResource({"classpath:META-INF/cxf/cxf.xml"})
+@ImportResource({ "classpath:META-INF/cxf/cxf.xml" })
 public class CxfConfig {
 
 }

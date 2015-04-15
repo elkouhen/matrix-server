@@ -10,16 +10,17 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ServletConfig {
-    @Bean
-    public EmbeddedServletContainerFactory servletContainer() {
-        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
-        return tomcat;
-    }
+	@Bean
+	public EmbeddedServletContainerFactory servletContainer() {
+		TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
+		return tomcat;
+	}
 
-    /*private Connector createConnector() {
-        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
-
-        return  connector;
-    }*/
+	/*
+	 * private Connector createConnector() { Connector connector = new
+	 * Connector("org.apache.coyote.http11.Http11NioProtocol");
+	 * 
+	 * return connector; }
+	 */
 
 }

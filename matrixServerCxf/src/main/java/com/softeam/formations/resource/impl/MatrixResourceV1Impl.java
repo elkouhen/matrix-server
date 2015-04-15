@@ -12,12 +12,12 @@ import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.Response;
 import com.softeam.formations.datalayer.dto.Matrix;
 import com.softeam.formations.datalayer.dto.Pair;
-import com.softeam.formations.resource.MatrixResource;
+import com.softeam.formations.resource.MatrixResourceV1;
 import com.softeam.formations.resources.helpers.MatrixHelper;
 
 //@JaxrsResource
 //@Service("com.softeam.formations.resource.MatrixResource")
-public class MatrixResourceImpl implements MatrixResource {
+public class MatrixResourceV1Impl implements MatrixResourceV1 {
 
 	private static final String RESOURCE_MATRIX_POWER = "http://localhost:8080/matrixServerCxf/services/rest/v1/matrix/power";
 
@@ -26,7 +26,7 @@ public class MatrixResourceImpl implements MatrixResource {
 
 	@Autowired
 	private MatrixHelper matrixHelper;
-	
+
 	@Override
 	public void power(@Suspended AsyncResponse response, Pair<Matrix, Integer> m)
 			throws JsonProcessingException {
@@ -38,7 +38,7 @@ public class MatrixResourceImpl implements MatrixResource {
 					m.getRight() - 1);
 
 			ObjectMapper objectMapper = new ObjectMapper();
-			
+
 			String msg = objectMapper.writeValueAsString(pair);
 
 			async.preparePost(RESOURCE_MATRIX_POWER).setBody(msg)
@@ -50,9 +50,12 @@ public class MatrixResourceImpl implements MatrixResource {
 						public Response onCompleted(Response responsePower)
 								throws Exception {
 
-							Matrix responsePowerMat = objectMapper.readValue(responsePower.getResponseBody(), Matrix.class);
-							
-							response.resume(matrixHelper.multiply(m.getLeft(), responsePowerMat));
+							Matrix responsePowerMat = objectMapper.readValue(
+									responsePower.getResponseBody(),
+									Matrix.class);
+
+							response.resume(matrixHelper.multiply(m.getLeft(),
+									responsePowerMat));
 
 							return null;
 						}

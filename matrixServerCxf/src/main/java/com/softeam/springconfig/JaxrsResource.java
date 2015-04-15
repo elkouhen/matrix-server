@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 /**
  * @author elkouhen
  */
-@Target(value = {ElementType.TYPE})
+@Target(value = { ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface JaxrsResource {
 

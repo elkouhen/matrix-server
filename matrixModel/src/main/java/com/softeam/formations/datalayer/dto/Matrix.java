@@ -1,60 +1,60 @@
 package com.softeam.formations.datalayer.dto;
 
+import java.io.Serializable;
+
 import org.springframework.data.annotation.Id;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.io.Serializable;
 
 /**
  * Created by elkouhen on 16/01/15.
  */
 public class Matrix implements Serializable {
 
-    @Id
-    @JsonProperty("id") 
-    private String id;
+	@Id
+	@JsonProperty("id")
+	private String id;
 
-    @JsonProperty("nx")
-    private int nx;
-    
-    @JsonProperty("data")
-    private float data[];
+	@JsonProperty("nx")
+	private int nx;
 
-    public Matrix() {
-    }
+	@JsonProperty("data")
+	private float data[];
 
-    public Matrix(int nx) {
-        this.nx = nx;
-        this.data = new float[nx * nx];
-    }
+	public Matrix() {
+	}
 
-    public Matrix(int nx, float data[]) {
-        this.nx = nx;
-        this.data = data;
-    }
+	public Matrix(int nx) {
+		this.nx = nx;
+		this.data = new float[nx * nx];
+	}
 
-    public int getNx() {
-        return nx;
-    }
+	public Matrix(int nx, float data[]) {
+		this.nx = nx;
+		this.data = data;
+	}
 
-    public void setNx(int nx) {
-        this.nx = nx;
-    }
+	public float get(int i, int j) {
+		return data[i * nx + j];
+	}
 
-    public float[] getData() {
-        return data;
-    }
+	public float[] getData() {
+		return data;
+	}
 
-    public void setData(float[] data) {
-        this.data = data;
-    }
+	public int getNx() {
+		return nx;
+	}
 
-    public void set(int i, int j, float val) {
-        data[i * nx + j] = val;
-    }
+	public void set(int i, int j, float val) {
+		data[i * nx + j] = val;
+	}
 
-    public float get(int i, int j) {
-        return data[i * nx + j];
-    }
+	public void setData(float[] data) {
+		this.data = data;
+	}
+
+	public void setNx(int nx) {
+		this.nx = nx;
+	}
 }

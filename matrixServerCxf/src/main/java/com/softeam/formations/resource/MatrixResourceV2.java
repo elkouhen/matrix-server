@@ -15,8 +15,9 @@ import com.softeam.formations.datalayer.dto.Pair;
 @Consumes("application/json")
 @Produces("application/json")
 public interface MatrixResourceV2 {
-	
+
 	@POST
 	@Path("/power")
-    public void power(@Suspended AsyncResponse response, final Pair<Matrix, Integer> m) throws JsonProcessingException;
+	public void power(@Suspended AsyncResponse response,
+			final Pair<Matrix, Integer> m) throws JsonProcessingException;
 }
