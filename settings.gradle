@@ -1,2 +1,2 @@
 rootProject.name = 'matrixProject'
-include ':matrixModel', ':matrixServerSpringBoot', ':matrixServerCxf' //, 'matrixPerf'
+include ':matrixModel', ':matrixServerMvc', ':matrixServerCxf' //, 'matrixPerf'

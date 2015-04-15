@@ -11,10 +11,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.softeam.formations.datalayer.dto.Matrix;
 import com.softeam.formations.datalayer.dto.Pair;
 
-@Path("/v1/matrix")
+@Path("/v2/matrix")
 @Consumes("application/json")
 @Produces("application/json")
-public interface MatrixResource {
+public interface MatrixResourceV2 {
 	
 	@POST
 	@Path("/power")

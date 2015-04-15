@@ -1,4 +1,4 @@
 task gatling(type: Exec) {
   workingDir '.'
-  commandLine "/home/elkouhen/opt/gatling-charts-highcharts-bundle-2.1.4/bin/gatling.sh", "-sf", "src/test/scala", "-s", "MongoSyncScenario"
+  commandLine "/home/elkouhen/opt/gatling-charts-highcharts-bundle-2.1.4/bin/gatling.sh", "-sf", "src/test/scala", "-s", "AsyncCxfScenario"
 }

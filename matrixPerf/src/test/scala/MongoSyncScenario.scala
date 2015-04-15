@@ -7,7 +7,7 @@ class MongoSyncScenario extends Simulation {
 
   val httpConf = http.baseURL("http://localhost:8080")
 
-  val scn = scenario("AsyncBasicSimulation")
+  val scn = scenario("MongoSyncSimulation")
     .exec(http("request_1")
     .post("/matrix/v3/power")
     .body(StringBody( """{"right": 3, "left": 3}""")).asJSON)
