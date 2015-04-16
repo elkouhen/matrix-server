@@ -4,6 +4,7 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,9 +15,10 @@ import com.softeam.formations.datalayer.dto.Matrix;
 import com.softeam.formations.datalayer.dto.Pair;
 import com.softeam.formations.resource.MatrixResourceV1;
 import com.softeam.formations.resources.helpers.MatrixHelper;
+import com.softeam.springconfig.JaxrsResource;
 
-//@JaxrsResource
-//@Service("com.softeam.formations.resource.MatrixResource")
+@JaxrsResource
+@Service("com.softeam.formations.resource.MatrixResourceV1")
 public class MatrixResourceV1Impl implements MatrixResourceV1 {
 
 	private static final String RESOURCE_MATRIX_POWER = "http://localhost:8080/matrixServerCxf/services/rest/v1/matrix/power";
