@@ -1,7 +1,0 @@
-[package]
-name = "matrixServerRust"
-version = "0.1.0"
-authors = ["el <mehdi.elkouhen@gmail.com>"]
-
-[dependencies.rustless]
-git = "https://github.com/rustless/rustless"
