@@ -3,7 +3,6 @@ package com.softeam.formations.springconfig;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -23,8 +22,6 @@ public class RestTemplateConfig {
 
 	@Bean
 	public HttpClient httpClient() {
-
-		PoolingHttpClientConnectionManager manager = new PoolingHttpClientConnectionManager();
 
 		final HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 

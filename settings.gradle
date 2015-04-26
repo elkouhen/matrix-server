@@ -1,2 +1,0 @@
-rootProject.name = 'matrixProject'
-include ':matrixModel', ':matrixServerMvc', ':matrixServerCxf' //, 'matrixPerf'

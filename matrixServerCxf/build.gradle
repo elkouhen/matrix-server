@@ -1,6 +1,10 @@
 apply plugin: 'java'
+apply plugin: 'maven'
 apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
+
+version = '1.0.0'
+group = 'com.softeam.matrixProject'
 
 war.archiveName "matrixServerCxf.war"
 
@@ -15,11 +19,12 @@ jcenter()
 }
 
 repositories {
+  mavenLocal()
   mavenCentral()
 }
 
 dependencies {
- compile project(':matrixModel')
+ compile 'com.softeam.matrixProject:matrixModel:1.0.0'
  compile 'com.ning:async-http-client:1.9.15'
  compile 'org.springframework:spring-web:4.1.4.RELEASE'
  compile 'org.springframework:spring-context-support:4.1.4.RELEASE'
