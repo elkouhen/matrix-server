@@ -52,7 +52,7 @@ public class MatrixResourceV3Impl {
 				m.getLeft(), m.getRight() - 1);
 
 		restTemplate.exchange(
-				MATRIX_RESOURCE_HOST + MATRIX_RESOURCE_URL + POWER,
+				MATRIX_RESOURCE_HOST +  MATRIX_RESOURCE_URL + POWER,
 				HttpMethod.POST, new HttpEntity<Object>(operation),
 				Matrix.class).addCallback(
 				new ListenableFutureCallback<ResponseEntity<Matrix>>() {

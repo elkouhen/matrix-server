@@ -1,0 +1,67 @@
+#![feature(plugin)]
+
+#[plugin]
+extern crate rustless;
+extern crate hyper;
+extern crate iron;
+extern crate "rustc-serialize" as rustc_serialize;
+extern crate valico;
+
+use hyper::status::StatusCode;
+use iron::Iron;
+use rustless::{
+    Application, Api, Nesting, Versioning
+};
+use rustc_serialize::json::ToJson;
+
+fn main() {
+
+    let api = Api::build(dsl!(|api| {
+        // Specify API version
+        version("v1", Versioning::AcceptHeader("chat"));
+        prefix("api");
+
+        // Create API for chats
+        mount(Api::build(dsl!(|chats_api| {
+
+            after(|client, _params| {
+                client.set_status(StatusCode::NotFound);
+                Ok(())
+            });
+
+            // Add namespace
+            namespace("chats/:id", dsl!(|chat_ns| {
+
+                // Valico settings for this namespace
+                params(|params| {
+                    params.req_typed("id", valico::u64())
+                });
+
+                // Create endpoint for POST /chats/:id/users/:user_id
+                post("users/:user_id", dsl!(|endpoint| {
+
+                    // Add description
+                    desc("Update user");
+
+                    // Valico settings for endpoint params
+                    params(|params| {
+                        params.req_typed("user_id", valico::u64());
+                        params.req_typed("name", valico::string())
+                    });
+
+                    handle(|client, params| {
+                        client.json(&params.to_json())
+                    })
+                }));
+
+            }));
+        })));
+    }));
+
+    let app = Application::new(api);
+
+    Iron::new(app).listen("localhost:4000").unwrap();
+    println!("On 4000");
+
+    println!("Rustless server started!");
+}
