@@ -1,1 +1,1 @@
-Test de l'asynchronisme en java (serveur de calcul sur des matrices)
+Test de l'asynchronisme (serveur de calcul sur des matrices)
