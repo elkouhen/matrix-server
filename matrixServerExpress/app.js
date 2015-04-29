@@ -50,8 +50,8 @@ app.post('/matrix/power', function (req, res) {
 		rp(options)
 			.then(function (response) {
 
-				res.send(multiply(m.left, response));
-			});
+			res.send(multiply(m.left, response));
+		});
 	}
 });
 var server = app.listen(8080, function () {

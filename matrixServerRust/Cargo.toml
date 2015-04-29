@@ -7,6 +7,7 @@ authors = ["elkouhen <mehdi.elkouhen@gmail.com>"]
 iron = "*"
 router = "*"
 rustc-serialize = "*"
+hyper = "*" 
 
 [dependencies.bodyparser]
 git = "https://github.com/iron/body-parser.git"

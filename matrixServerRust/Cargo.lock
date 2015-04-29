@@ -3,6 +3,7 @@ name = "matrixServerRust"
 version = "0.1.0"
 dependencies = [
  "bodyparser 0.0.5 (git+https://github.com/iron/body-parser.git)",
+ "hyper 0.3.14 (registry+https://github.com/rust-lang/crates.io-index)",
  "iron 0.1.16 (registry+https://github.com/rust-lang/crates.io-index)",
  "persistent 0.0.5 (git+https://github.com/iron/persistent.git)",
  "router 0.0.10 (registry+https://github.com/rust-lang/crates.io-index)",
