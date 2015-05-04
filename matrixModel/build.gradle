@@ -18,5 +18,5 @@ dependencies {
 }
 
 jar {
-   //manifest.attributes provider: 'my cool company'
+   
 }

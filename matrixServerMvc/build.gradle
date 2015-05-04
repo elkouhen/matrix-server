@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'spring-boot'
+apply plugin: 'eclipse'
 
 version = '1.0.0'
 group = 'com.softeam.matrixProject'
@@ -33,20 +34,24 @@ dependencies {
 
   compile 'com.softeam.matrixProject:matrixModel:1.0.0'
   compile('org.springframework.boot:spring-boot-starter-web') {
-    exclude module: 'spring-boot-starter-tomcat'
-  }
+    //exclude module: 'spring-boot-starter-tomcat'
+  } 
 
 compile 'ch.qos.logback:logback-classic:1.1.2'
-compile 'de.codecentric:spring-boot-admin-server:1.2.0'
+/* compile 'de.codecentric:spring-boot-admin-server:1.2.0'
 compile 'de.codecentric:spring-boot-admin-server-ui:1.2.0'
 compile 'de.codecentric:spring-boot-admin-starter-client:1.2.0'
+*/
 compile 'org.springframework.boot:spring-boot-starter-actuator'
 compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
 compile 'org.springframework:spring-web:4.1.5.RELEASE'
 compile 'org.springframework:spring-context-support:4.1.5.RELEASE'
+compile 'io.reactivex:rxjava:1.0.0'
+compile 'io.reactivex:rxapache-http:0.21.0'
+compile 'javax.el:javax.el-api:2.2.4'
 }
 
 
 springBoot {
-mainClass = 'com.softeam.formations.application.Application'
+ mainClass = 'com.softeam.formations.application.Application'
 }

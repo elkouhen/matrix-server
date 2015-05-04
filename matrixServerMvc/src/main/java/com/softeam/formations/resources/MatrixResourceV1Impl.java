@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@RequestMapping(value = MatrixResourceV1Impl.MATRIX_RESOURCE_URL)
+@RequestMapping(value = MatrixResourceV1Impl.RESOURCE)
 public class MatrixResourceV1Impl {
 
-	public static final String MATRIX_RESOURCE_HOST = "http://localhost:8080";
-	public static final String MATRIX_RESOURCE_URL = "/matrix/v1";
+	public static final String HOST = "http://localhost:8080";
+	public static final String RESOURCE = "/matrix/v1";
 	public static final String POWER = "/power";
 
-	@Autowired
+	//@Autowired
 	private RestTemplate restTemplate;
 
 	@Autowired
@@ -39,7 +39,7 @@ public class MatrixResourceV1Impl {
 				m.getLeft(), m.getRight() - 1);
 
 		ResponseEntity<Matrix> response = restTemplate.exchange(
-				MATRIX_RESOURCE_HOST + MATRIX_RESOURCE_URL + POWER,
+				HOST + RESOURCE + POWER,
 				HttpMethod.POST, new HttpEntity<Object>(operation),
 				Matrix.class);
 
