@@ -9,12 +9,16 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.http.nio.client.methods.HttpAsyncMethods;
 import org.apache.http.nio.protocol.HttpAsyncRequestProducer;
+import org.apache.http.protocol.BasicHttpContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import rx.Notification;
 import rx.apache.http.ObservableHttp;
+import rx.apache.http.ObservableHttpResponse;
+import rx.functions.Action1;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,7 +40,7 @@ public class MatrixResourceV3Impl implements MatrixResourceV3 {
 	private MatrixHelper matrixHelper;
 
 	@Autowired
-	private CloseableHttpAsyncClient closeableHttpAsyncClient;
+	private CloseableHttpAsyncClient httpClient;
 
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -58,26 +62,16 @@ public class MatrixResourceV3Impl implements MatrixResourceV3 {
 				objectMapper);
 
 		ObservableHttp
-				.createRequest(requestProducer, closeableHttpAsyncClient)
+				.createRequest(requestProducer, httpClient)
 				.toObservable()
-				.flatMap(response -> {
-					return response.getContent().map(bb -> {
-						return new String(bb);
-					});
-				})
-				.toBlocking()
-				.forEach(
-						response -> {
+				.doOnEach(
+						new Action1<Notification<? super ObservableHttpResponse>>() {
 
-							System.out.println(response);
+							@Override
+							public void call(
+									Notification<? super ObservableHttpResponse> t1) {
+								asyncresponse.resume("coucou");
 
-							try {
-								Matrix readValue = objectMapper.readValue(
-										(String) response, Matrix.class);
-
-								asyncresponse.resume(readValue);
-							} catch (Exception e) {
-								asyncresponse.resume(e);
 							}
 						});
 
