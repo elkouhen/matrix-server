@@ -21,7 +21,9 @@ import com.softeam.springconfig.JaxrsResource;
 @Service("com.softeam.formations.resource.MatrixResourceV1")
 public class MatrixResourceV1Impl implements MatrixResourceV1 {
 
-	private static final String RESOURCE_MATRIX_POWER = "http://localhost:8080/matrixServerCxf/services/rest/v1/matrix/power";
+	public static final String HOST = "http://localhost:8080/matrixServerCxf/services/rest";
+	public static final String RESOURCE_URL = "/matrix/v3";
+	public static final String POWER = "/power";
 
 	@Autowired
 	private AsyncHttpClient async;
@@ -43,7 +45,7 @@ public class MatrixResourceV1Impl implements MatrixResourceV1 {
 
 			String msg = objectMapper.writeValueAsString(pair);
 
-			async.preparePost(RESOURCE_MATRIX_POWER).setBody(msg)
+			async.preparePost(HOST + RESOURCE_URL + POWER).setBody(msg)
 					.addHeader("Content-Type", "application/json")
 					.addHeader("Accept", "application/json")
 					.execute(new AsyncCompletionHandler<Response>() {

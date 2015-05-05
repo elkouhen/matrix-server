@@ -11,7 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.softeam.formations.datalayer.dto.Matrix;
 import com.softeam.formations.datalayer.dto.Pair;
 
-@Path("/v1/matrix")
+@Path("/matrix/v1")
 @Consumes("application/json")
 @Produces("application/json")
 public interface MatrixResourceV1 {

@@ -22,7 +22,9 @@ import com.softeam.springconfig.JaxrsResource;
 @Service("com.softeam.formations.resource.MatrixResourceV2")
 public class MatrixResourceV2Impl implements MatrixResourceV2 {
 
-	private static final String RESOURCE_MATRIX_POWER = "http://localhost:8080/matrixServerCxf/services/rest/v2/matrix/power";
+	public static final String HOST = "http://localhost:8080/matrixServerCxf/services/rest";
+	public static final String RESOURCE_URL = "/matrix/v3";
+	public static final String POWER = "/power";
 
 	@Autowired
 	private AsyncRestTemplate restTemplate;
@@ -42,7 +44,7 @@ public class MatrixResourceV2Impl implements MatrixResourceV2 {
 					m.getLeft(), m.getRight() - 1);
 
 			restTemplate
-					.exchange(RESOURCE_MATRIX_POWER, HttpMethod.POST,
+					.exchange(HOST + RESOURCE_URL + POWER, HttpMethod.POST,
 							new HttpEntity<Object>(operation), Matrix.class)
 					.addCallback(
 							new ListenableFutureCallback<ResponseEntity<Matrix>>() {
