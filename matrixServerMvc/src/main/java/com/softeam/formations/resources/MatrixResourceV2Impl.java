@@ -1,9 +1,5 @@
 package com.softeam.formations.resources;
 
-import com.softeam.formations.datalayer.dto.Matrix;
-import com.softeam.formations.datalayer.dto.Pair;
-import com.softeam.formations.resources.helpers.MatrixHelper;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.context.request.async.DeferredResult;
 
+import com.softeam.formations.datalayer.dto.Matrix;
+import com.softeam.formations.datalayer.dto.Pair;
+import com.softeam.formations.resources.helpers.MatrixHelper;
+
 @RestController
 @RequestMapping(value = MatrixResourceV2Impl.RESOURCE, method = RequestMethod.POST)
 public class MatrixResourceV2Impl {
@@ -26,8 +26,7 @@ public class MatrixResourceV2Impl {
 	public static final String RESOURCE = "/matrix/v2";
 	public static final String POWER = "/power";
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(MatrixResourceV2Impl.class);
+	private static final Logger logger = LoggerFactory.getLogger(MatrixResourceV2Impl.class);
 
 	@Autowired
 	private AsyncRestTemplate restTemplate;
@@ -36,8 +35,7 @@ public class MatrixResourceV2Impl {
 	private MatrixHelper matrixHelper;
 
 	@RequestMapping(value = POWER, method = RequestMethod.POST)
-	public DeferredResult<Matrix> power(
-			@RequestBody final Pair<Matrix, Integer> m) {
+	public DeferredResult<Matrix> power(@RequestBody final Pair<Matrix, Integer> m) {
 
 		final DeferredResult<Matrix> deferredResult = new DeferredResult<Matrix>();
 
@@ -46,11 +44,9 @@ public class MatrixResourceV2Impl {
 			return deferredResult;
 		}
 
-		final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(
-				m.getLeft(), m.getRight() - 1);
+		final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(m.getLeft(), m.getRight() - 1);
 
-		restTemplate.exchange(HOST + RESOURCE + POWER, HttpMethod.POST,
-				new HttpEntity<Object>(operation), Matrix.class).addCallback(
+		restTemplate.exchange(HOST + RESOURCE + POWER, HttpMethod.POST, new HttpEntity<Object>(operation), Matrix.class).addCallback(
 				new ListenableFutureCallback<ResponseEntity<Matrix>>() {
 					@Override
 					public void onFailure(Throwable ex) {
@@ -61,8 +57,7 @@ public class MatrixResourceV2Impl {
 
 					@Override
 					public void onSuccess(ResponseEntity<Matrix> response) {
-						deferredResult.setResult(matrixHelper.multiply(
-								m.getLeft(), response.getBody()));
+						deferredResult.setResult(matrixHelper.multiply(m.getLeft(), response.getBody()));
 					}
 				});
 

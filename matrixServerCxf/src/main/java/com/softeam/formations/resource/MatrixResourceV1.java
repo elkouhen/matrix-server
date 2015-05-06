@@ -18,6 +18,5 @@ public interface MatrixResourceV1 {
 
 	@POST
 	@Path("/power")
-	public void power(@Suspended AsyncResponse response,
-			final Pair<Matrix, Integer> m) throws JsonProcessingException;
+	public void power(@Suspended AsyncResponse response, final Pair<Matrix, Integer> m) throws JsonProcessingException;
 }

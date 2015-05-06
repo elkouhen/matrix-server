@@ -23,7 +23,7 @@ import com.softeam.springconfig.JaxrsResource;
 public class MatrixResourceV2Impl implements MatrixResourceV2 {
 
 	public static final String HOST = "http://localhost:8080/matrixServerCxf/services/rest";
-	public static final String RESOURCE_URL = "/matrix/v3";
+	public static final String RESOURCE = "/matrix/v3";
 	public static final String POWER = "/power";
 
 	@Autowired
@@ -33,37 +33,29 @@ public class MatrixResourceV2Impl implements MatrixResourceV2 {
 	private MatrixHelper matrixHelper;
 
 	@Override
-	public void power(@Suspended AsyncResponse response, Pair<Matrix, Integer> m)
-			throws JsonProcessingException {
+	public void power(@Suspended AsyncResponse asyncreponse, Pair<Matrix, Integer> m) throws JsonProcessingException {
 
 		if (m.getRight() == 1) {
-			response.resume(m.getLeft());
-		} else {
-
-			final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(
-					m.getLeft(), m.getRight() - 1);
-
-			restTemplate
-					.exchange(HOST + RESOURCE_URL + POWER, HttpMethod.POST,
-							new HttpEntity<Object>(operation), Matrix.class)
-					.addCallback(
-							new ListenableFutureCallback<ResponseEntity<Matrix>>() {
-								@Override
-								public void onFailure(Throwable ex) {
-
-								}
-
-								@Override
-								public void onSuccess(
-										ResponseEntity<Matrix> responsePower) {
-
-									response.resume(matrixHelper.multiply(
-											m.getLeft(),
-											responsePower.getBody()));
-								}
-							});
-
+			asyncreponse.resume(m.getLeft());
+			return;
 		}
+
+		final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(m.getLeft(), m.getRight() - 1);
+
+		restTemplate//
+				.exchange(HOST + RESOURCE + POWER, HttpMethod.POST, new HttpEntity<Object>(operation), Matrix.class)//
+				.addCallback(new ListenableFutureCallback<ResponseEntity<Matrix>>() {
+					@Override
+					public void onFailure(Throwable ex) {
+
+					}
+
+					@Override
+					public void onSuccess(ResponseEntity<Matrix> responsePower) {
+
+						asyncreponse.resume(matrixHelper.multiply(m.getLeft(), responsePower.getBody()));
+					}
+				});
 
 		return;
 	}

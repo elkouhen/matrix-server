@@ -32,8 +32,8 @@ public class RestServicesPublish {
 	private SpringBus springBus = null;
 
 	/**
-	 * Injection d'une classe de recherche et caractérisation (module,
-	 * interface) des services à publier
+	 * Injection d'une classe de recherche et caractérisation (module, interface)
+	 * des services à publier
 	 */
 	@Autowired
 	private ServicesConfigUtils util = null;

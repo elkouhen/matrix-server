@@ -25,15 +25,14 @@ public class RestTemplateConfig {
 		final CloseableHttpAsyncClient httpclient = HttpAsyncClients.createDefault();
 
 		httpclient.start();
-		
+
 		return httpclient;
 	}
 
 	@Bean
 	public AsyncHttpClient ningAsyncHttpClient() {
 
-		AsyncHttpClientConfig config = new AsyncHttpClientConfig.Builder()
-				.setAllowPoolingConnections(true).build();
+		AsyncHttpClientConfig config = new AsyncHttpClientConfig.Builder().setAllowPoolingConnections(true).build();
 
 		return new AsyncHttpClient(config);
 	}

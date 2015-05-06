@@ -8,14 +8,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.ContextClosedEvent;
 
 @EnableAutoConfiguration
-//@EnableAdminServer
-//@EnableDiscoveryClient
+// @EnableAdminServer
+// @EnableDiscoveryClient
 @ComponentScan("com.softeam")
 public class Application {
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext cac = SpringApplication.run(
-				Application.class, args);
+		ConfigurableApplicationContext cac = SpringApplication.run(Application.class, args);
 
 		cac.addApplicationListener(new ApplicationListener<ContextClosedEvent>() {
 

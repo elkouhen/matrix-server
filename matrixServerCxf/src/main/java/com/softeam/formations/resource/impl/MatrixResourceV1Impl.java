@@ -22,58 +22,54 @@ import com.softeam.springconfig.JaxrsResource;
 public class MatrixResourceV1Impl implements MatrixResourceV1 {
 
 	public static final String HOST = "http://localhost:8080/matrixServerCxf/services/rest";
-	public static final String RESOURCE_URL = "/matrix/v3";
+	public static final String RESOURCE = "/matrix/v3";
 	public static final String POWER = "/power";
 
 	@Autowired
-	private AsyncHttpClient async;
+	private AsyncHttpClient httpClient;
 
 	@Autowired
 	private MatrixHelper matrixHelper;
 
 	@Override
-	public void power(@Suspended AsyncResponse response, Pair<Matrix, Integer> m)
-			throws JsonProcessingException {
+	public void power(@Suspended AsyncResponse response, Pair<Matrix, Integer> m) throws JsonProcessingException {
 
 		if (m.getRight() == 1) {
 			response.resume(m.getLeft());
-		} else {
-			Pair<Matrix, Integer> pair = new Pair<Matrix, Integer>(m.getLeft(),
-					m.getRight() - 1);
-
-			ObjectMapper objectMapper = new ObjectMapper();
-
-			String msg = objectMapper.writeValueAsString(pair);
-
-			async.preparePost(HOST + RESOURCE_URL + POWER).setBody(msg)
-					.addHeader("Content-Type", "application/json")
-					.addHeader("Accept", "application/json")
-					.execute(new AsyncCompletionHandler<Response>() {
-
-						@Override
-						public Response onCompleted(Response responsePower)
-								throws Exception {
-
-							Matrix responsePowerMat = objectMapper.readValue(
-									responsePower.getResponseBody(),
-									Matrix.class);
-
-							response.resume(matrixHelper.multiply(m.getLeft(),
-									responsePowerMat));
-
-							return null;
-						}
-
-						@Override
-						public void onThrowable(Throwable throwable) {
-
-							response.resume(throwable);
-
-							return;
-						}
-
-					});
+			return;
 		}
+
+		Pair<Matrix, Integer> pair = new Pair<Matrix, Integer>(m.getLeft(), m.getRight() - 1);
+
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		String msg = objectMapper.writeValueAsString(pair);
+
+		httpClient.preparePost(HOST + RESOURCE + POWER)//
+				.setBody(msg)//
+				.addHeader("Content-Type", "application/json")//
+				.addHeader("Accept", "application/json")//
+				.execute(new AsyncCompletionHandler<Response>() {
+
+					@Override
+					public Response onCompleted(Response responsePower) throws Exception {
+
+						Matrix responsePowerMat = objectMapper.readValue(responsePower.getResponseBody(), Matrix.class);
+
+						response.resume(matrixHelper.multiply(m.getLeft(), responsePowerMat));
+
+						return null;
+					}
+
+					@Override
+					public void onThrowable(Throwable throwable) {
+
+						response.resume(throwable);
+
+						return;
+					}
+
+				});
 
 		return;
 	}

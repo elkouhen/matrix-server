@@ -55,34 +55,30 @@ class ServicesConfigUtils {
 	 * "annotation"
 	 *
 	 * @param beanList
-	 *            liste des beans trouvés
+	 *          liste des beans trouvés
 	 * @param annotation
-	 *            annotation utilisée pour la recherche des classes
+	 *          annotation utilisée pour la recherche des classes
 	 */
 
 	public void findBeans(List<Object> beanList, Class annotation) {
-		ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(
-				false);
+		ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
 		scanner.addIncludeFilter(new AnnotationTypeFilter(annotation));
 
 		for (BeanDefinition bd : scanner.findCandidateComponents(BASE_PACKAGE)) {
-			beanList.add(applicationContext.getBean(interfaceName(bd
-					.getBeanClassName())));
+			beanList.add(applicationContext.getBean(interfaceName(bd.getBeanClassName())));
 		}
 	}
 
 	/**
-	 * Recherche (dans le package BASE_PACKAGE) des classes annotées
-	 * "annotation"
+	 * Recherche (dans le package BASE_PACKAGE) des classes annotées "annotation"
 	 *
 	 * @param classList
-	 *            liste des classes trouvées
+	 *          liste des classes trouvées
 	 * @param annotation
-	 *            annotation sur les classes recherchées
+	 *          annotation sur les classes recherchées
 	 */
 	public void findClass(List<Class> classList, Class annotation) {
-		ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(
-				false);
+		ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
 		scanner.addIncludeFilter(new AnnotationTypeFilter(annotation));
 
 		for (BeanDefinition bd : scanner.findCandidateComponents(BASE_PACKAGE)) {
@@ -91,8 +87,7 @@ class ServicesConfigUtils {
 				classList.add(Class.forName(bd.getBeanClassName()));
 			} catch (ClassNotFoundException e) {
 
-				LOG.error("problème de déploiement du service associé au bean : "
-						+ bd.getBeanClassName());
+				LOG.error("problème de déploiement du service associé au bean : " + bd.getBeanClassName());
 			}
 		}
 	}
@@ -102,19 +97,18 @@ class ServicesConfigUtils {
 	 * Spring et son interface (basé sur les conventions de nommage SNCF)
 	 *
 	 * @param classe
-	 *            nom de la classe du composant Spring
+	 *          nom de la classe du composant Spring
 	 * @return Retourne le nom de l'interface de la classe
 	 */
 	public String interfaceName(String classeName) {
-		return classeName.replaceAll("(?i)(" + IMPL_PACKAGE + ")(.+?)("
-				+ IMPL_SUFFIX + ")", "$2");
+		return classeName.replaceAll("(?i)(" + IMPL_PACKAGE + ")(.+?)(" + IMPL_SUFFIX + ")", "$2");
 	}
 
 	/**
 	 * Détermine le nom du module fonctionnel auquel appartient la classe
 	 *
 	 * @param classe
-	 *            classe du composant Spring
+	 *          classe du composant Spring
 	 * @return le nom du module fonctionnel de la classe
 	 */
 	public String moduleName(Class classe) {
@@ -122,8 +116,7 @@ class ServicesConfigUtils {
 		String classeName = classe.getCanonicalName();
 
 		int indexStart = classeName.indexOf('.', BASE_PACKAGE.length() + 1);
-		int indexEnd = classeName.indexOf('.', classeName.lastIndexOf('.')
-				- ".dl.dto".length());
+		int indexEnd = classeName.indexOf('.', classeName.lastIndexOf('.') - ".dl.dto".length());
 
 		return classeName.substring(indexStart + 1, indexEnd).replace(".", "/");
 	}

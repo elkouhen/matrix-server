@@ -5,7 +5,6 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
-import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
 import org.apache.http.impl.nio.client.HttpAsyncClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,18 +22,13 @@ public class RestTemplateConfig {
 
 	@Bean
 	public CloseableHttpAsyncClient asyncHttpClient() {
-		final RequestConfig requestConfig = RequestConfig.custom()
-		        .setSocketTimeout(3000)
-		        .setConnectTimeout(500).build();
-		final CloseableHttpAsyncClient httpclient = HttpAsyncClients.custom()
-		        .setDefaultRequestConfig(requestConfig)
-		        .setMaxConnPerRoute(20)
-		        .setMaxConnTotal(50)
-		        .build();
-		
+		final RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(3000).setConnectTimeout(500).build();
+		final CloseableHttpAsyncClient httpclient = HttpAsyncClients.custom().setDefaultRequestConfig(requestConfig).setMaxConnPerRoute(20).setMaxConnTotal(50)
+				.build();
+
 		httpclient.start();
-		
-		return httpclient; 
+
+		return httpclient;
 	}
 
 	@Bean
