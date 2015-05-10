@@ -1,7 +1,6 @@
 package com.softeam.formations.resource.impl;
 
 import java.io.UnsupportedEncodingException;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -36,7 +35,7 @@ import com.softeam.springconfig.JaxrsResource;
 @Service("com.softeam.formations.resource.MatrixResource" + MatrixResourceV3Impl.VERSION)
 public class MatrixResourceV3Impl implements MatrixResourceV3 {
 
-	public static final String HOST = "http://127.0.0.1:8080/matrixServerCxf/services/rest";
+	public static final String HOST = "http://192.168.1.88:8080/matrixServerCxf/services/rest";
 	public static final String RESOURCE = "/matrix/";
 	public static final String VERSION = "V3";
 	public static final String POWER = "/power";
