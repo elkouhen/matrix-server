@@ -9,8 +9,9 @@ import javax.ws.rs.container.Suspended;
 
 import com.softeam.formations.datalayer.dto.Matrix;
 import com.softeam.formations.datalayer.dto.Pair;
+import com.softeam.formations.resource.impl.MatrixResourceV3Impl;
 
-@Path("/matrix/v3")
+@Path(MatrixResourceV3Impl.RESOURCE + MatrixResourceV3Impl.VERSION)
 @Consumes("application/json")
 @Produces("application/json")
 public interface MatrixResourceV3 {

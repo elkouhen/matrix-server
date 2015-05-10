@@ -15,11 +15,12 @@ import com.softeam.formations.datalayer.dto.Pair;
 import com.softeam.formations.resources.helpers.MatrixHelper;
 
 @RestController
-@RequestMapping(value = MatrixResourceV1Impl.RESOURCE)
+@RequestMapping(value = MatrixResourceV1Impl.RESOURCE + MatrixResourceV1Impl.VERSION)
 public class MatrixResourceV1Impl {
 
 	public static final String HOST = "http://localhost:8080";
-	public static final String RESOURCE = "/matrix/v1";
+	public static final String RESOURCE = "/matrix/";
+	public static final String VERSION = "V1";
 	public static final String POWER = "/power";
 
 	@Autowired
@@ -37,7 +38,7 @@ public class MatrixResourceV1Impl {
 
 		final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(m.getLeft(), m.getRight() - 1);
 
-		ResponseEntity<Matrix> response = restTemplate.exchange(HOST + RESOURCE + POWER, HttpMethod.POST, new HttpEntity<Object>(operation), Matrix.class);
+		ResponseEntity<Matrix> response = restTemplate.exchange(HOST + RESOURCE + VERSION + POWER, HttpMethod.POST, new HttpEntity<Object>(operation), Matrix.class);
 
 		return matrixHelper.multiply(m.getLeft(), response.getBody());
 	}

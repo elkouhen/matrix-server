@@ -16,13 +16,15 @@ import com.softeam.formations.datalayer.dao.IMatrixRepository;
 import com.softeam.formations.datalayer.dto.Matrix;
 import com.softeam.formations.datalayer.dto.Pair;
 import com.softeam.formations.resources.helpers.MatrixHelper;
+import com.sun.corba.se.impl.util.Version;
 
 @RestController
-@RequestMapping(value = MatrixResourceV4Impl.MATRIX_RESOURCE_URL, method = RequestMethod.POST)
+@RequestMapping(value = MatrixResourceV4Impl.RESOURCE + MatrixResourceV4Impl.VERSION, method = RequestMethod.POST)
 public class MatrixResourceV4Impl {
 
-	public static final String MATRIX_RESOURCE_HOST = "http://localhost:8080";
-	public static final String MATRIX_RESOURCE_URL = "/matrix/v4";
+	public static final String HOST = "http://localhost:8080";
+	public static final String RESOURCE = "/matrix/";
+	public static final String VERSION = "V4";
 	public static final String POWER = "/power";
 
 	@Autowired
@@ -49,7 +51,7 @@ public class MatrixResourceV4Impl {
 
 		final Pair<String, Integer> operation = new Pair<String, Integer>(m.getLeft(), m.getRight() - 1);
 
-		restTemplate.exchange(MATRIX_RESOURCE_HOST + MATRIX_RESOURCE_URL + POWER, HttpMethod.POST, new HttpEntity<Object>(operation), Matrix.class).addCallback(
+		restTemplate.exchange(HOST + RESOURCE + VERSION + POWER, HttpMethod.POST, new HttpEntity<Object>(operation), Matrix.class).addCallback(
 				new ListenableFutureCallback<ResponseEntity<Matrix>>() {
 					@Override
 					public void onFailure(Throwable ex) {

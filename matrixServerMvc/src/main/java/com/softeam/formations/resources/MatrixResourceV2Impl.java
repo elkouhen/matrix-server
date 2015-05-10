@@ -19,11 +19,12 @@ import com.softeam.formations.datalayer.dto.Pair;
 import com.softeam.formations.resources.helpers.MatrixHelper;
 
 @RestController
-@RequestMapping(value = MatrixResourceV2Impl.RESOURCE, method = RequestMethod.POST)
+@RequestMapping(value = MatrixResourceV2Impl.RESOURCE + MatrixResourceV2Impl.VERSION, method = RequestMethod.POST)
 public class MatrixResourceV2Impl {
 
 	public static final String HOST = "http://localhost:8080";
-	public static final String RESOURCE = "/matrix/v2";
+	public static final String RESOURCE = "/matrix/";
+	public static final String VERSION = "V2";
 	public static final String POWER = "/power";
 
 	private static final Logger logger = LoggerFactory.getLogger(MatrixResourceV2Impl.class);
@@ -46,7 +47,7 @@ public class MatrixResourceV2Impl {
 
 		final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(m.getLeft(), m.getRight() - 1);
 
-		restTemplate.exchange(HOST + RESOURCE + POWER, HttpMethod.POST, new HttpEntity<Object>(operation), Matrix.class).addCallback(
+		restTemplate.exchange(HOST + RESOURCE + VERSION + POWER, HttpMethod.POST, new HttpEntity<Object>(operation), Matrix.class).addCallback(
 				new ListenableFutureCallback<ResponseEntity<Matrix>>() {
 					@Override
 					public void onFailure(Throwable ex) {

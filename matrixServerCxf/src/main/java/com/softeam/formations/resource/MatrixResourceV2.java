@@ -10,8 +10,9 @@ import javax.ws.rs.container.Suspended;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.softeam.formations.datalayer.dto.Matrix;
 import com.softeam.formations.datalayer.dto.Pair;
+import com.softeam.formations.resource.impl.MatrixResourceV2Impl;
 
-@Path("/matrix/v2")
+@Path(MatrixResourceV2Impl.RESOURCE + MatrixResourceV2Impl.VERSION)
 @Consumes("application/json")
 @Produces("application/json")
 public interface MatrixResourceV2 {

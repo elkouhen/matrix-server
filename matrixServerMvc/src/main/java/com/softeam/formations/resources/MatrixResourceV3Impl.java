@@ -26,11 +26,12 @@ import com.softeam.formations.datalayer.dto.Pair;
 import com.softeam.formations.resources.helpers.MatrixHelper;
 
 @RestController
-@RequestMapping(value = MatrixResourceV3Impl.RESOURCE, method = RequestMethod.POST)
+@RequestMapping(value = MatrixResourceV3Impl.RESOURCE + MatrixResourceV3Impl.VERSION, method = RequestMethod.POST)
 public class MatrixResourceV3Impl {
 
 	public static final String HOST = "http://localhost:8080";
-	public static final String RESOURCE = "/matrix/v3";
+	public static final String RESOURCE = "/matrix/";
+	public static final String VERSION = "V3";
 	public static final String POWER = "/power";
 
 	@Autowired
@@ -85,7 +86,7 @@ public class MatrixResourceV3Impl {
 			JsonProcessingException, UnknownHostException {
 		String operationAsString = objectMapper.writeValueAsString(operation);
 
-		HttpPost request = new HttpPost(HOST + RESOURCE + POWER);
+		HttpPost request = new HttpPost(HOST + RESOURCE + VERSION + POWER);
 
 		request.addHeader("Accept", "application/json");
 		request.addHeader("Content-Type", "application/json");

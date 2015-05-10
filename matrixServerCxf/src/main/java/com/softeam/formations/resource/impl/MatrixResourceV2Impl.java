@@ -19,11 +19,12 @@ import com.softeam.formations.resources.helpers.MatrixHelper;
 import com.softeam.springconfig.JaxrsResource;
 
 @JaxrsResource
-@Service("com.softeam.formations.resource.MatrixResourceV2")
+@Service("com.softeam.formations.resource.MatrixResource" + MatrixResourceV2Impl.VERSION)
 public class MatrixResourceV2Impl implements MatrixResourceV2 {
 
-	public static final String HOST = "http://localhost:8080/matrixServerCxf/services/rest";
-	public static final String RESOURCE = "/matrix/v3";
+	public static final String HOST = "http://127.0.0.1:8080/matrixServerCxf/services/rest";
+	public static final String RESOURCE = "/matrix/";
+	public static final String VERSION = "V2";
 	public static final String POWER = "/power";
 
 	@Autowired
@@ -43,7 +44,7 @@ public class MatrixResourceV2Impl implements MatrixResourceV2 {
 		final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(m.getLeft(), m.getRight() - 1);
 
 		restTemplate//
-				.exchange(HOST + RESOURCE + POWER, HttpMethod.POST, new HttpEntity<Object>(operation), Matrix.class)//
+				.exchange(HOST + RESOURCE + VERSION + POWER, HttpMethod.POST, new HttpEntity<Object>(operation), Matrix.class)//
 				.addCallback(new ListenableFutureCallback<ResponseEntity<Matrix>>() {
 					@Override
 					public void onFailure(Throwable ex) {

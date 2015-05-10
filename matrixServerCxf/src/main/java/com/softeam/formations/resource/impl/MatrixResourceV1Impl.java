@@ -18,11 +18,12 @@ import com.softeam.formations.resources.helpers.MatrixHelper;
 import com.softeam.springconfig.JaxrsResource;
 
 @JaxrsResource
-@Service("com.softeam.formations.resource.MatrixResourceV1")
+@Service("com.softeam.formations.resource.MatrixResource" + MatrixResourceV1Impl.VERSION)
 public class MatrixResourceV1Impl implements MatrixResourceV1 {
 
-	public static final String HOST = "http://localhost:8080/matrixServerCxf/services/rest";
-	public static final String RESOURCE = "/matrix/v3";
+	public static final String HOST = "http://127.0.0.1:8080/matrixServerCxf/services/rest";
+	public static final String RESOURCE = "/matrix/";
+	public static final String VERSION = "V1";
 	public static final String POWER = "/power";
 
 	@Autowired
@@ -45,7 +46,7 @@ public class MatrixResourceV1Impl implements MatrixResourceV1 {
 
 		String msg = objectMapper.writeValueAsString(pair);
 
-		httpClient.preparePost(HOST + RESOURCE + POWER)//
+		httpClient.preparePost(HOST + RESOURCE + VERSION + POWER)//
 				.setBody(msg)//
 				.addHeader("Content-Type", "application/json")//
 				.addHeader("Accept", "application/json")//

@@ -2,6 +2,7 @@ package com.softeam.formations.resource.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import javax.ws.rs.container.AsyncResponse;
@@ -31,11 +32,12 @@ import com.softeam.formations.resources.helpers.MatrixHelper;
 import com.softeam.springconfig.JaxrsResource;
 
 @JaxrsResource
-@Service("com.softeam.formations.resource.MatrixResourceV4")
+@Service("com.softeam.formations.resource.MatrixResource" + MatrixResourceV4Impl.VERSION)
 public class MatrixResourceV4Impl implements MatrixResourceV4 {
 
 	public static final String HOST = "http://127.0.0.1:8080/matrixServerCxf/services/rest";
-	public static final String RESOURCE = "/matrix/v3";
+	public static final String RESOURCE = "/matrix/";
+	public static final String VERSION = "V4";
 	public static final String POWER = "/power";
 
 	@Autowired
@@ -47,6 +49,7 @@ public class MatrixResourceV4Impl implements MatrixResourceV4 {
 	@Autowired
 	private ObjectMapper objectMapper;
 
+	@Override
 	@RequestMapping(value = POWER, method = RequestMethod.POST)
 	public void power(@Suspended AsyncResponse asyncresponse, final Pair<Matrix, Integer> m) throws Exception {
 
@@ -94,13 +97,13 @@ public class MatrixResourceV4Impl implements MatrixResourceV4 {
 			JsonProcessingException, UnknownHostException {
 		String operationAsString = objectMapper.writeValueAsString(operation);
 
-		HttpPost request = new HttpPost(HOST + RESOURCE + POWER);
+		HttpPost request = new HttpPost(HOST + RESOURCE + VERSION + POWER);
 
 		request.addHeader("Accept", "application/json");
 		request.addHeader("Content-Type", "application/json");
 
 		request.setEntity(new StringEntity(operationAsString));
 
-		return HttpAsyncMethods.create(new HttpHost(Inet4Address.getLocalHost(), 8080), request);
+		return HttpAsyncMethods.create(new HttpHost(InetAddress.getLocalHost(), 8080), request);
 	}
 }
