@@ -47,6 +47,36 @@ public class MatrixResourceV4Impl {
 	@Autowired
 	private ObjectMapper objectMapper;
 
+	private Observable<? super HttpResponse> makeRequest(final Pair<Matrix, Integer> operation, HttpAsyncRequestProducer requestProducer) {
+
+		return Observable.create(new OnSubscribe<HttpResponse>() {
+
+			@Override
+			public void call(Subscriber<? super HttpResponse> subscriber) {
+
+				httpClient.execute(requestProducer, new BasicAsyncResponseConsumer(), new FutureCallback<HttpResponse>() {
+
+					@Override
+					public void cancelled() {
+
+					}
+
+					@Override
+					public void completed(HttpResponse response) {
+
+						subscriber.onNext(response);
+						subscriber.onCompleted();
+					}
+
+					@Override
+					public void failed(Exception exception) {
+						subscriber.onError(exception);
+					}
+				});
+			}
+		});
+	}
+
 	@RequestMapping(value = POWER, method = RequestMethod.POST)
 	public DeferredResult<Matrix> power(@RequestBody final Pair<Matrix, Integer> m) throws Exception {
 
@@ -77,36 +107,6 @@ public class MatrixResourceV4Impl {
 				.subscribe(matrix -> deferredResult.setResult(matrix));
 
 		return deferredResult;
-	}
-
-	private Observable<? super HttpResponse> makeRequest(final Pair<Matrix, Integer> operation, HttpAsyncRequestProducer requestProducer) {
-
-		return Observable.create(new OnSubscribe<HttpResponse>() {
-
-			@Override
-			public void call(Subscriber<? super HttpResponse> subscriber) {
-
-				httpClient.execute(requestProducer, new BasicAsyncResponseConsumer(), new FutureCallback<HttpResponse>() {
-
-					@Override
-					public void cancelled() {
-
-					}
-
-					@Override
-					public void completed(HttpResponse response) {
-
-						subscriber.onNext(response);
-						subscriber.onCompleted();
-					}
-
-					@Override
-					public void failed(Exception exception) {
-						subscriber.onError(exception);
-					}
-				});
-			}
-		});
 	}
 
 	private HttpAsyncRequestProducer requestProducer(final Pair<Matrix, Integer> operation, ObjectMapper objectMapper) throws UnsupportedEncodingException,

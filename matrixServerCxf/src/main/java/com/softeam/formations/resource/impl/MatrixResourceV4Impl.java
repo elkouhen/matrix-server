@@ -50,37 +50,6 @@ public class MatrixResourceV4Impl implements MatrixResourceV4 {
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	@Override
-	@RequestMapping(value = POWER, method = RequestMethod.POST)
-	public void power(@Suspended AsyncResponse asyncresponse, final Pair<Matrix, Integer> m) throws Exception {
-
-		if (m.getRight() == 1) {
-			asyncresponse.resume(m.getLeft());
-			return;
-		}
-
-		final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(m.getLeft(), m.getRight() - 1);
-
-		HttpAsyncRequestProducer requestProducer = requestProducer(operation, objectMapper);
-
-		makeRequest(operation, requestProducer).//
-				map(httpResponse -> {
-					BasicHttpResponse basicHttpResponse = (BasicHttpResponse) httpResponse;
-					Matrix matrix = null;
-					try {
-						matrix = objectMapper.readValue(basicHttpResponse.getEntity().getContent(), Matrix.class);
-
-					} catch (Exception e) {
-
-					}
-
-					return matrix;
-
-				}).subscribe(matrix -> asyncresponse.resume(matrix));
-
-		return;
-	}
-
 	private Observable<? super HttpResponse> makeRequest(final Pair<Matrix, Integer> operation, HttpAsyncRequestProducer requestProducer) {
 
 		return Observable.create(new OnSubscribe<HttpResponse>() {
@@ -110,6 +79,37 @@ public class MatrixResourceV4Impl implements MatrixResourceV4 {
 				});
 			}
 		});
+	}
+
+	@Override
+	@RequestMapping(value = POWER, method = RequestMethod.POST)
+	public void power(@Suspended AsyncResponse asyncresponse, final Pair<Matrix, Integer> m) throws Exception {
+
+		if (m.getRight() == 1) {
+			asyncresponse.resume(m.getLeft());
+			return;
+		}
+
+		final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(m.getLeft(), m.getRight() - 1);
+
+		HttpAsyncRequestProducer requestProducer = requestProducer(operation, objectMapper);
+
+		makeRequest(operation, requestProducer).//
+				map(httpResponse -> {
+					BasicHttpResponse basicHttpResponse = (BasicHttpResponse) httpResponse;
+					Matrix matrix = null;
+					try {
+						matrix = objectMapper.readValue(basicHttpResponse.getEntity().getContent(), Matrix.class);
+
+					} catch (Exception e) {
+
+					}
+
+					return matrix;
+
+				}).subscribe(matrix -> asyncresponse.resume(matrix));
+
+		return;
 	}
 
 	private HttpAsyncRequestProducer requestProducer(final Pair<Matrix, Integer> operation, ObjectMapper objectMapper) throws UnsupportedEncodingException,

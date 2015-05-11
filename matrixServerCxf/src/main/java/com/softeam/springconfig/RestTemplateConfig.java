@@ -30,14 +30,6 @@ public class RestTemplateConfig {
 	}
 
 	@Bean
-	public AsyncHttpClient ningAsyncHttpClient() {
-
-		AsyncHttpClientConfig config = new AsyncHttpClientConfig.Builder().setAllowPoolingConnections(true).build();
-
-		return new AsyncHttpClient(config);
-	}
-
-	@Bean
 	public AsyncRestTemplate asyncRestTemplate() {
 		return new AsyncRestTemplate();
 	}
@@ -55,6 +47,14 @@ public class RestTemplateConfig {
 	@Bean
 	public HttpComponentsClientHttpRequestFactory httpRequestFactory() {
 		return new HttpComponentsClientHttpRequestFactory(httpClient());
+	}
+
+	@Bean
+	public AsyncHttpClient ningAsyncHttpClient() {
+
+		AsyncHttpClientConfig config = new AsyncHttpClientConfig.Builder().setAllowPoolingConnections(true).build();
+
+		return new AsyncHttpClient(config);
 	}
 
 	@Bean
