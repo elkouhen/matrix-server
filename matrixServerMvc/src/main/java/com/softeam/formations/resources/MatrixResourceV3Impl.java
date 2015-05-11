@@ -20,22 +20,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
-import rx.Observable;
-import rx.Observable.OnSubscribe;
-import rx.Subscriber;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softeam.formations.datalayer.dto.Matrix;
 import com.softeam.formations.datalayer.dto.Pair;
 import com.softeam.formations.resources.helpers.MatrixHelper;
 
 @RestController
-@RequestMapping(value = MatrixResourceV4Impl.RESOURCE + MatrixResourceV4Impl.VERSION, method = RequestMethod.POST)
-public class MatrixResourceV4Impl {
+@RequestMapping(value = MatrixResourceV3Impl.RESOURCE + MatrixResourceV3Impl.VERSION, method = RequestMethod.POST)
+public class MatrixResourceV3Impl {
 
 	public static final String HOST = "http://localhost:8080";
 	public static final String RESOURCE = "/matrix/";
-	public static final String VERSION = "V4";
+	public static final String VERSION = "V3";
 	public static final String POWER = "/power";
 
 	@Autowired
@@ -61,52 +57,35 @@ public class MatrixResourceV4Impl {
 
 		HttpAsyncRequestProducer requestProducer = requestProducer(operation, objectMapper);
 
-		makeRequest(operation, requestProducer)//
-				.map(httpResponse -> {
-					BasicHttpResponse basicHttpResponse = (BasicHttpResponse) httpResponse;
-					Matrix matrix = null;
-					try {
-						matrix = objectMapper.readValue(basicHttpResponse.getEntity().getContent(), Matrix.class);
-
-					} catch (Exception e) {
-
-					}
-
-					return matrix;
-				})//
-				.subscribe(matrix -> deferredResult.setResult(matrix));
-
-		return deferredResult;
-	}
-
-	private Observable<? super HttpResponse> makeRequest(final Pair<Matrix, Integer> operation, HttpAsyncRequestProducer requestProducer) {
-
-		return Observable.create(new OnSubscribe<HttpResponse>() {
+		httpClient.execute(requestProducer, new BasicAsyncResponseConsumer(), new FutureCallback<HttpResponse>() {
 
 			@Override
-			public void call(Subscriber<? super HttpResponse> subscriber) {
+			public void cancelled() {
+				// TODO Auto-generated method stub
 
-				httpClient.execute(requestProducer, new BasicAsyncResponseConsumer(), new FutureCallback<HttpResponse>() {
+			}
 
-					@Override
-					public void cancelled() {
+			@Override
+			public void completed(HttpResponse arg0) {
+				BasicHttpResponse basicHttpResponse = (BasicHttpResponse) arg0;
 
-					}
+				try {
+					deferredResult.setResult(objectMapper.readValue(basicHttpResponse.getEntity().getContent(), Matrix.class));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
-					@Override
-					public void completed(HttpResponse response) {
+			}
 
-						subscriber.onNext(response);
-						subscriber.onCompleted();
-					}
+			@Override
+			public void failed(Exception arg0) {
+				// TODO Auto-generated method stub
 
-					@Override
-					public void failed(Exception exception) {
-						subscriber.onError(exception);
-					}
-				});
 			}
 		});
+
+		return deferredResult;
 	}
 
 	private HttpAsyncRequestProducer requestProducer(final Pair<Matrix, Integer> operation, ObjectMapper objectMapper) throws UnsupportedEncodingException,
