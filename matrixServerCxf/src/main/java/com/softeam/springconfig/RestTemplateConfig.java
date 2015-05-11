@@ -20,7 +20,7 @@ import com.ning.http.client.AsyncHttpClientConfig;
 @Configuration
 public class RestTemplateConfig {
 
-	@Bean
+	@Bean (destroyMethod = "close")
 	public CloseableHttpAsyncClient asyncHttpClient() {
 		final CloseableHttpAsyncClient httpclient = HttpAsyncClients.createDefault();
 

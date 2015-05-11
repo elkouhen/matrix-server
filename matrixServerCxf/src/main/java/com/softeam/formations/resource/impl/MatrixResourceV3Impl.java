@@ -74,7 +74,8 @@ public class MatrixResourceV3Impl implements MatrixResourceV3 {
 				BasicHttpResponse basicHttpResponse = (BasicHttpResponse) arg0;
 
 				try {
-					asyncresponse.resume(objectMapper.readValue(basicHttpResponse.getEntity().getContent(), Matrix.class));
+					Matrix matrix = objectMapper.readValue(basicHttpResponse.getEntity().getContent(), Matrix.class);
+					asyncresponse.resume(matrixHelper.multiply(m.getLeft(), matrix));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -70,7 +70,9 @@ public class MatrixResourceV3Impl {
 				BasicHttpResponse basicHttpResponse = (BasicHttpResponse) arg0;
 
 				try {
-					deferredResult.setResult(objectMapper.readValue(basicHttpResponse.getEntity().getContent(), Matrix.class));
+					Matrix matrix = objectMapper.readValue(basicHttpResponse.getEntity().getContent(), Matrix.class);
+					
+					deferredResult.setResult(matrixHelper.multiply(m.getLeft(), matrix));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -64,18 +64,19 @@ public class MatrixResourceV4Impl implements MatrixResourceV4 {
 		HttpAsyncRequestProducer requestProducer = requestProducer(operation, objectMapper);
 
 		makeRequest(operation, requestProducer).//
-				doOnNext(httpResponse -> {
+				map(httpResponse -> {
 					BasicHttpResponse basicHttpResponse = (BasicHttpResponse) httpResponse;
 					Matrix matrix = null;
 					try {
 						matrix = objectMapper.readValue(basicHttpResponse.getEntity().getContent(), Matrix.class);
 
-						asyncresponse.resume(matrix);
 					} catch (Exception e) {
 
-						asyncresponse.resume(e);
 					}
-				}).subscribe();
+
+					return matrix;
+
+				}).subscribe(matrix -> asyncresponse.resume(matrix));
 
 		return;
 	}
