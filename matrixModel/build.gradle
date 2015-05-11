@@ -13,8 +13,8 @@ repositories {
 }
 
 dependencies {
-   compile 'org.springframework.data:spring-data-mongodb:1.6.1.RELEASE'
    compile 'com.fasterxml.jackson.core:jackson-annotations:2.5.2'
+   compile 'org.springframework:spring-context:4.1.5.RELEASE'
 }
 
 jar {

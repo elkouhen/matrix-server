@@ -22,9 +22,7 @@ public class RestTemplateConfig {
 
 	@Bean
 	public CloseableHttpAsyncClient asyncHttpClient() {
-		final RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(3000).setConnectTimeout(500).build();
-		final CloseableHttpAsyncClient httpclient = HttpAsyncClients.custom().setDefaultRequestConfig(requestConfig).setMaxConnPerRoute(20).setMaxConnTotal(50)
-				.build();
+		final CloseableHttpAsyncClient httpclient = HttpAsyncClients.createDefault();
 
 		httpclient.start();
 

@@ -8,20 +8,19 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 
 import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.concurrent.FutureCallback;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
+import org.apache.http.message.BasicHttpResponse;
 import org.apache.http.nio.client.methods.HttpAsyncMethods;
+import org.apache.http.nio.protocol.BasicAsyncResponseConsumer;
 import org.apache.http.nio.protocol.HttpAsyncRequestProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import rx.Observable;
-import rx.apache.http.ObservableHttp;
-import rx.apache.http.ObservableHttpResponse;
-import rx.functions.Func1;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,7 +34,7 @@ import com.softeam.springconfig.JaxrsResource;
 @Service("com.softeam.formations.resource.MatrixResource" + MatrixResourceV3Impl.VERSION)
 public class MatrixResourceV3Impl implements MatrixResourceV3 {
 
-	public static final String HOST = "http://192.168.1.88:8080/matrixServerCxf/services/rest";
+	public static final String HOST = "http://127.0.0.1:8080/matrixServerCxf/services/rest";
 	public static final String RESOURCE = "/matrix/";
 	public static final String VERSION = "V3";
 	public static final String POWER = "/power";
@@ -62,36 +61,33 @@ public class MatrixResourceV3Impl implements MatrixResourceV3 {
 
 		HttpAsyncRequestProducer requestProducer = requestProducer(operation, objectMapper);
 
-		ObservableHttp//
-				.createRequest(requestProducer, httpClient)//
-				.toObservable()//
-				.flatMap(new Func1<ObservableHttpResponse, Observable<String>>() {
+		httpClient.execute(requestProducer, new BasicAsyncResponseConsumer(), new FutureCallback<HttpResponse>() {
 
-					@Override
-					public Observable<String> call(ObservableHttpResponse response) {
-						return response.getContent().map(new Func1<byte[], String>() {
+			@Override
+			public void cancelled() {
+				// TODO Auto-generated method stub
 
-							@Override
-							public String call(byte[] bb) {
-								return new String(bb);
-							}
+			}
 
-						});
-					}
-				})//
-				.toBlocking()//
-				.forEach(response -> {
+			@Override
+			public void completed(HttpResponse arg0) {
+				BasicHttpResponse basicHttpResponse = (BasicHttpResponse) arg0;
 
-					System.out.println(response);
+				try {
+					asyncresponse.resume(objectMapper.readValue(basicHttpResponse.getEntity().getContent(), Matrix.class));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
-					try {
-						Matrix matrix = objectMapper.readValue(response, Matrix.class);
+			}
 
-						asyncresponse.resume(matrix);
-					} catch (Exception e) {
-						asyncresponse.resume(e);
-					}
-				});
+			@Override
+			public void failed(Exception arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 
 		return;
 	}

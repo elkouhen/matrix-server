@@ -2,8 +2,6 @@ package com.softeam.formations.datalayer.dto;
 
 import java.io.Serializable;
 
-import org.springframework.data.annotation.Id;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -11,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Matrix implements Serializable {
 
-	@Id
+	
 	@JsonProperty("id")
 	private String id;
 
