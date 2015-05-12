@@ -1,7 +1,9 @@
 package com.softeam.formations.springconfig;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
@@ -19,6 +21,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 @Configuration
 public class RestTemplateConfig {
+
+	@Bean
+	public ExecutorService executorService() {
+		return Executors.newFixedThreadPool(10);
+
+	}
 
 	@Bean
 	public CloseableHttpAsyncClient asyncHttpClient() {

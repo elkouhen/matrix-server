@@ -25,6 +25,7 @@ sourceCompatibility=1.8
 targetCompatibility=1.8
 
 repositories {
+  maven { url 'http://repo.spring.io/libs-release' }
   mavenLocal()
   mavenCentral()
   
@@ -48,7 +49,10 @@ compile 'org.springframework:spring-web:4.1.5.RELEASE'
 compile 'org.springframework:spring-context-support:4.1.5.RELEASE'
 compile 'io.reactivex:rxjava:1.0.0'
 compile 'org.apache.httpcomponents:httpasyncclient:4.1'
-
+compile 'io.projectreactor:reactor-core:2.0.1.RELEASE'
+compile 'io.projectreactor:reactor-stream:2.0.1.RELEASE'
+compile 'io.projectreactor:reactor-bus:2.0.1.RELEASE'
+compile "io.projectreactor.spring:reactor-spring-context:2.0.1.RELEASE"
 }
 
 

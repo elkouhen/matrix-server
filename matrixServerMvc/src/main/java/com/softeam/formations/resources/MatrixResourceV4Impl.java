@@ -2,6 +2,7 @@ package com.softeam.formations.resources;
 
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
+import java.util.concurrent.ExecutorService;
 
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -22,6 +23,8 @@ import org.springframework.web.context.request.async.DeferredResult;
 
 import rx.Observable;
 import rx.Observable.OnSubscribe;
+import rx.schedulers.Schedulers;
+import rx.Scheduler;
 import rx.Subscriber;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,6 +46,9 @@ public class MatrixResourceV4Impl {
 
 	@Autowired
 	private CloseableHttpAsyncClient httpClient;
+
+	@Autowired
+	private ExecutorService threadPoolExecutor;
 
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -104,7 +110,7 @@ public class MatrixResourceV4Impl {
 
 					return matrix;
 				})//
-				.subscribe(matrix -> deferredResult.setResult(matrix));
+				.subscribeOn(Schedulers.from(threadPoolExecutor)).subscribe(matrix -> deferredResult.setResult(matrix));
 
 		return deferredResult;
 	}

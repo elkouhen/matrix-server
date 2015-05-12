@@ -7,7 +7,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.ContextClosedEvent;
 
+import reactor.spring.context.config.EnableReactor;
+
 @EnableAutoConfiguration
+@EnableReactor
 // @EnableAdminServer
 // @EnableDiscoveryClient
 @ComponentScan("com.softeam")

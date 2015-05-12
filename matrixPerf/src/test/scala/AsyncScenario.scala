@@ -8,7 +8,7 @@ class AsyncScenario extends Simulation {
   val httpConf = http.baseURL("http://localhost:8080")
 
   val appContext = "/matrix/"
-  val version = "V4"
+  val version = "V5"
   val scn = scenario("AsyncSimulation")
     .exec(http("request_1")
     .post(appContext + version  + "/power")
