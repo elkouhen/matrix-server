@@ -28,6 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softeam.formations.datalayer.dto.Matrix;
 import com.softeam.formations.datalayer.dto.Pair;
 import com.softeam.formations.resources.helpers.MatrixHelper;
+import com.softeam.formations.statsd.StatsWriter;
 
 @RestController
 @RequestMapping(value = MatrixResourceV5Impl.RESOURCE + MatrixResourceV5Impl.VERSION, method = RequestMethod.POST)
@@ -49,10 +50,15 @@ public class MatrixResourceV5Impl {
 
 	@Autowired
 	private ObjectMapper objectMapper;
+	
+	@Autowired
+	private StatsWriter statsWriter;
 
 	@RequestMapping(value = POWER, method = RequestMethod.POST)
 	public DeferredResult<Matrix> power(@RequestBody final Pair<Matrix, Integer> m) throws Exception {
 
+		statsWriter.write();
+		
 		final DeferredResult<Matrix> deferredResult = new DeferredResult<Matrix>();
 
 		if (m.getRight() == 1) {

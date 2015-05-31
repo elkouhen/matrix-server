@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import com.softeam.formations.datalayer.dto.Matrix;
 import com.softeam.formations.datalayer.dto.Pair;
 import com.softeam.formations.resources.helpers.MatrixHelper;
+import com.softeam.formations.statsd.StatsWriter;
 
 @RestController
 @RequestMapping(value = MatrixResourceV1Impl.RESOURCE + MatrixResourceV1Impl.VERSION)
@@ -28,9 +29,14 @@ public class MatrixResourceV1Impl {
 
 	@Autowired
 	private MatrixHelper matrixHelper;
+	
+	@Autowired
+	private StatsWriter statsWriter;
 
 	@RequestMapping(value = POWER, method = RequestMethod.POST)
 	public Matrix power(@RequestBody final Pair<Matrix, Integer> m) {
+		
+		statsWriter.write();
 
 		if (m.getRight() == 1) {
 			return m.getLeft();

@@ -17,6 +17,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 import com.softeam.formations.datalayer.dto.Matrix;
 import com.softeam.formations.datalayer.dto.Pair;
 import com.softeam.formations.resources.helpers.MatrixHelper;
+import com.softeam.formations.statsd.StatsWriter;
 
 @RestController
 @RequestMapping(value = MatrixResourceV2Impl.RESOURCE + MatrixResourceV2Impl.VERSION, method = RequestMethod.POST)
@@ -35,8 +36,13 @@ public class MatrixResourceV2Impl {
 	@Autowired
 	private MatrixHelper matrixHelper;
 
+	@Autowired
+	private StatsWriter statsWriter;
+
 	@RequestMapping(value = POWER, method = RequestMethod.POST)
 	public DeferredResult<Matrix> power(@RequestBody final Pair<Matrix, Integer> m) {
+
+		statsWriter.write();
 
 		final DeferredResult<Matrix> deferredResult = new DeferredResult<Matrix>();
 

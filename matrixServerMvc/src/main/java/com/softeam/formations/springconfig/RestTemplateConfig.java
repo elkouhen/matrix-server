@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.http.impl.nio.client.HttpAsyncClients;
 import org.springframework.context.annotation.Bean;
@@ -23,12 +24,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class RestTemplateConfig {
 
 	@Bean
-	public ExecutorService executorService() {
-		return Executors.newFixedThreadPool(10);
-
-	}
-
-	@Bean
 	public CloseableHttpAsyncClient asyncHttpClient() {
 		final CloseableHttpAsyncClient httpclient = HttpAsyncClients.createDefault();
 
@@ -38,16 +33,14 @@ public class RestTemplateConfig {
 	}
 
 	@Bean
-	AsyncRestTemplate asyncRestTemplate() {
+	public AsyncRestTemplate asyncRestTemplate() {
 		return new AsyncRestTemplate();
 	}
 
 	@Bean
 	public HttpClient httpClient() {
 
-		final HttpClientBuilder builder = HttpClientBuilder.create();
-
-		final CloseableHttpClient client = builder.build();
+		final CloseableHttpClient client = HttpClients.createDefault();
 
 		return client;
 	}
@@ -63,7 +56,7 @@ public class RestTemplateConfig {
 	}
 
 	@Bean
-	RestTemplate restTemplate() {
+	public RestTemplate restTemplate() {
 		return new RestTemplate(httpRequestFactory());
 	}
 }
