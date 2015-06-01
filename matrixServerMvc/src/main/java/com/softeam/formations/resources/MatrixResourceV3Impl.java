@@ -43,7 +43,7 @@ public class MatrixResourceV3Impl {
 
 	@Autowired
 	private ObjectMapper objectMapper;
-	
+
 	@Autowired
 	private StatsWriter statsWriter;
 
@@ -51,7 +51,7 @@ public class MatrixResourceV3Impl {
 	public DeferredResult<Matrix> power(@RequestBody final Pair<Matrix, Integer> m) throws Exception {
 
 		statsWriter.write();
-		
+
 		final DeferredResult<Matrix> deferredResult = new DeferredResult<Matrix>();
 
 		if (m.getRight() == 1) {
@@ -72,12 +72,12 @@ public class MatrixResourceV3Impl {
 			}
 
 			@Override
-			public void completed(HttpResponse arg0) {
-				BasicHttpResponse basicHttpResponse = (BasicHttpResponse) arg0;
+			public void completed(HttpResponse resp) {
+				BasicHttpResponse basicHttpResponse = (BasicHttpResponse) resp;
 
 				try {
 					Matrix matrix = objectMapper.readValue(basicHttpResponse.getEntity().getContent(), Matrix.class);
-					
+
 					deferredResult.setResult(matrixHelper.multiply(m.getLeft(), matrix));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -87,7 +87,7 @@ public class MatrixResourceV3Impl {
 			}
 
 			@Override
-			public void failed(Exception arg0) {
+			public void failed(Exception exception) {
 				// TODO Auto-generated method stub
 
 			}

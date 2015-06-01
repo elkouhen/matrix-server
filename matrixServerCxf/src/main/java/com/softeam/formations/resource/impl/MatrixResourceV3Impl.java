@@ -28,6 +28,7 @@ import com.softeam.formations.datalayer.dto.Matrix;
 import com.softeam.formations.datalayer.dto.Pair;
 import com.softeam.formations.resource.MatrixResourceV3;
 import com.softeam.formations.resources.helpers.MatrixHelper;
+import com.softeam.formations.statsd.StatsWriter;
 import com.softeam.springconfig.JaxrsResource;
 
 @JaxrsResource
@@ -47,11 +48,16 @@ public class MatrixResourceV3Impl implements MatrixResourceV3 {
 
 	@Autowired
 	private ObjectMapper objectMapper;
+	
+	@Autowired
+	private StatsWriter statsWriter;
 
 	@Override
 	@RequestMapping(value = POWER, method = RequestMethod.POST)
 	public void power(@Suspended AsyncResponse asyncresponse, final Pair<Matrix, Integer> m) throws Exception {
 
+		statsWriter.write();
+		
 		if (m.getRight() == 1) {
 			asyncresponse.resume(m.getLeft());
 			return;
@@ -84,7 +90,7 @@ public class MatrixResourceV3Impl implements MatrixResourceV3 {
 			}
 
 			@Override
-			public void failed(Exception arg0) {
+			public void failed(Exception exception) {
 				// TODO Auto-generated method stub
 
 			}

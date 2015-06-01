@@ -30,6 +30,7 @@ import com.softeam.formations.datalayer.dto.Matrix;
 import com.softeam.formations.datalayer.dto.Pair;
 import com.softeam.formations.resource.MatrixResourceV4;
 import com.softeam.formations.resources.helpers.MatrixHelper;
+import com.softeam.formations.statsd.StatsWriter;
 import com.softeam.springconfig.JaxrsResource;
 
 @JaxrsResource
@@ -49,6 +50,9 @@ public class MatrixResourceV4Impl implements MatrixResourceV4 {
 
 	@Autowired
 	private ObjectMapper objectMapper;
+	
+	@Autowired
+	private StatsWriter statsWriter;
 
 	private Observable<? super HttpResponse> makeRequest(final Pair<Matrix, Integer> operation, HttpAsyncRequestProducer requestProducer) {
 
@@ -85,6 +89,8 @@ public class MatrixResourceV4Impl implements MatrixResourceV4 {
 	@RequestMapping(value = POWER, method = RequestMethod.POST)
 	public void power(@Suspended AsyncResponse asyncresponse, final Pair<Matrix, Integer> m) throws Exception {
 
+		statsWriter.write();
+		
 		if (m.getRight() == 1) {
 			asyncresponse.resume(m.getLeft());
 			return;

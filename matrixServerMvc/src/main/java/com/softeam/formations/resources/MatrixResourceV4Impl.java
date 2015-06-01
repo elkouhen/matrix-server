@@ -23,9 +23,8 @@ import org.springframework.web.context.request.async.DeferredResult;
 
 import rx.Observable;
 import rx.Observable.OnSubscribe;
-import rx.schedulers.Schedulers;
-import rx.Scheduler;
 import rx.Subscriber;
+import rx.schedulers.Schedulers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softeam.formations.datalayer.dto.Matrix;

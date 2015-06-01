@@ -7,8 +7,8 @@ class AsyncScenario extends Simulation {
 
   val httpConf = http.baseURL("http://localhost:8080")
 
-  val appContext = "/matrix/"
-  val version = "V3"
+  val appContext = "/matrixServerCxf/services/rest/matrix/"
+  val version = "V2"
   val scn = scenario("AsyncSimulation")
     .exec(http("request_1")
     .post(appContext + version  + "/power")
@@ -16,6 +16,6 @@ class AsyncScenario extends Simulation {
     .pause(5)
 
   setUp(
-    scn.inject(rampUsersPerSec(1) to (400) during (2 minutes))
+    scn.inject(rampUsersPerSec(1) to (200) during (2 minutes))
   ).protocols(httpConf)
 }

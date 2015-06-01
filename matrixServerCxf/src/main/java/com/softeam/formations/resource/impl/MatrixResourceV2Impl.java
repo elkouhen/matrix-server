@@ -16,6 +16,7 @@ import com.softeam.formations.datalayer.dto.Matrix;
 import com.softeam.formations.datalayer.dto.Pair;
 import com.softeam.formations.resource.MatrixResourceV2;
 import com.softeam.formations.resources.helpers.MatrixHelper;
+import com.softeam.formations.statsd.StatsWriter;
 import com.softeam.springconfig.JaxrsResource;
 
 @JaxrsResource
@@ -32,10 +33,15 @@ public class MatrixResourceV2Impl implements MatrixResourceV2 {
 
 	@Autowired
 	private MatrixHelper matrixHelper;
+	
+	@Autowired
+	private StatsWriter statsWriter;
 
 	@Override
 	public void power(@Suspended AsyncResponse asyncreponse, Pair<Matrix, Integer> m) throws JsonProcessingException {
 
+		statsWriter.write();
+		
 		if (m.getRight() == 1) {
 			asyncreponse.resume(m.getLeft());
 			return;

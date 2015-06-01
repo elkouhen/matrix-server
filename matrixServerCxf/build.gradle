@@ -40,4 +40,5 @@ dependencies {
  	compile 'ch.qos.logback:logback-classic:1.0.13'
  	compile 'io.reactivex:rxjava:1.0.0'
  	compile 'org.apache.httpcomponents:httpasyncclient:4.1'
+ 	compile 'com.timgroup:java-statsd-client:3.0.1'
 }
