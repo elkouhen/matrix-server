@@ -52,7 +52,7 @@ public class MatrixResourceV3Impl {
 
 		statsWriter.write();
 
-		final DeferredResult<Matrix> deferredResult = new DeferredResult<Matrix>();
+		final DeferredResult<Matrix> deferredResult = new DeferredResult<Matrix>(3000);
 
 		if (m.getRight() == 1) {
 			deferredResult.setResult(m.getLeft());
@@ -67,29 +67,25 @@ public class MatrixResourceV3Impl {
 
 			@Override
 			public void cancelled() {
-				// TODO Auto-generated method stub
-
+				deferredResult.setErrorResult(new Exception("cancelled"));
 			}
 
 			@Override
-			public void completed(HttpResponse resp) {
-				BasicHttpResponse basicHttpResponse = (BasicHttpResponse) resp;
+			public void completed(HttpResponse httpResponse) {
+				BasicHttpResponse basicHttpResponse = (BasicHttpResponse) httpResponse;
 
 				try {
 					Matrix matrix = objectMapper.readValue(basicHttpResponse.getEntity().getContent(), Matrix.class);
 
 					deferredResult.setResult(matrixHelper.multiply(m.getLeft(), matrix));
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					deferredResult.setErrorResult(e);
 				}
-
 			}
 
 			@Override
 			public void failed(Exception exception) {
-				// TODO Auto-generated method stub
-
+				deferredResult.setErrorResult(exception);
 			}
 		});
 
@@ -105,7 +101,10 @@ public class MatrixResourceV3Impl {
 		request.addHeader("Accept", "application/json");
 		request.addHeader("Content-Type", "application/json");
 
-		request.setEntity(new StringEntity(operationAsString));
+		StringEntity entity = new StringEntity(operationAsString);
+		// entity.setChunked(false);
+
+		request.setEntity(entity);
 
 		return HttpAsyncMethods.create(new HttpHost(InetAddress.getLocalHost(), 8080), request);
 	}

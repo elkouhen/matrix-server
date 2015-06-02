@@ -4,7 +4,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.config.RequestConfig;
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -14,7 +13,7 @@ import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
 import org.apache.http.impl.nio.client.HttpAsyncClients;
 import org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager;
 import org.apache.http.impl.nio.reactor.DefaultConnectingIOReactor;
-import org.apache.http.nio.reactor.ConnectingIOReactor;
+import org.apache.http.impl.nio.reactor.IOReactorConfig;
 import org.apache.http.nio.reactor.IOReactorException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,20 +37,23 @@ public class RestTemplateConfig {
 
 	}
 
-	@Bean (destroyMethod = "close")
+	@Bean
 	public CloseableHttpAsyncClient asyncHttpClient() throws IOReactorException {
 
-		RequestConfig config = RequestConfig.custom().setConnectTimeout(3000).build();
+		final IOReactorConfig ioReactorConfig = IOReactorConfig.custom()//
+				.setIoThreadCount(30)//
+				.setConnectTimeout(30000)//
+				.setSoTimeout(30000).build();
 
-		ConnectingIOReactor ioReactor = new DefaultConnectingIOReactor();
-		PoolingNHttpClientConnectionManager cm = new PoolingNHttpClientConnectionManager(ioReactor);
+		DefaultConnectingIOReactor ioreactor = new DefaultConnectingIOReactor(ioReactorConfig);
+		PoolingNHttpClientConnectionManager cm = new PoolingNHttpClientConnectionManager(ioreactor);
 
 		cm.setDefaultMaxPerRoute(10000);
 		cm.setMaxTotal(10000);
 
 		HttpAsyncClientBuilder builder = HttpAsyncClients.custom();
 
-		builder.setConnectionManager(cm).setDefaultRequestConfig(config);
+		builder.setConnectionManager(cm);
 
 		CloseableHttpAsyncClient httpclient = builder.build();
 

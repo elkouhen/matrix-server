@@ -3,6 +3,7 @@ package com.softeam.formations.resource.impl;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.concurrent.TimeUnit;
 
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
@@ -58,6 +59,8 @@ public class MatrixResourceV3Impl implements MatrixResourceV3 {
 
 		statsWriter.write();
 		
+		asyncresponse.setTimeout(3000, TimeUnit.MILLISECONDS);
+		
 		if (m.getRight() == 1) {
 			asyncresponse.resume(m.getLeft());
 			return;
@@ -71,7 +74,7 @@ public class MatrixResourceV3Impl implements MatrixResourceV3 {
 
 			@Override
 			public void cancelled() {
-				// TODO Auto-generated method stub
+				asyncresponse.resume(new Exception("cancelled"));
 
 			}
 
@@ -83,15 +86,14 @@ public class MatrixResourceV3Impl implements MatrixResourceV3 {
 					Matrix matrix = objectMapper.readValue(basicHttpResponse.getEntity().getContent(), Matrix.class);
 					asyncresponse.resume(matrixHelper.multiply(m.getLeft(), matrix));
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					asyncresponse.resume(e);
 				}
 
 			}
 
 			@Override
 			public void failed(Exception exception) {
-				// TODO Auto-generated method stub
+				asyncresponse.resume(exception);
 
 			}
 		});
