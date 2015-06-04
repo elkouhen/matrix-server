@@ -1,7 +1,13 @@
 package com.softeam.formations.resources;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -52,9 +58,10 @@ public class MatrixResourceV3Impl {
 
 		statsWriter.write();
 
-		final DeferredResult<Matrix> deferredResult = new DeferredResult<Matrix>(3000);
+		final DeferredResult<Matrix> deferredResult = new DeferredResult<Matrix>();
 
 		if (m.getRight() == 1) {
+
 			deferredResult.setResult(m.getLeft());
 			return deferredResult;
 		}
@@ -63,10 +70,12 @@ public class MatrixResourceV3Impl {
 
 		HttpAsyncRequestProducer requestProducer = requestProducer(operation, objectMapper);
 
-		httpClient.execute(requestProducer, new BasicAsyncResponseConsumer(), new FutureCallback<HttpResponse>() {
+		BasicAsyncResponseConsumer responseConsumer = new BasicAsyncResponseConsumer();
+		httpClient.execute(requestProducer, responseConsumer, new FutureCallback<HttpResponse>() {
 
 			@Override
 			public void cancelled() {
+
 				deferredResult.setErrorResult(new Exception("cancelled"));
 			}
 
@@ -75,7 +84,13 @@ public class MatrixResourceV3Impl {
 				BasicHttpResponse basicHttpResponse = (BasicHttpResponse) httpResponse;
 
 				try {
-					Matrix matrix = objectMapper.readValue(basicHttpResponse.getEntity().getContent(), Matrix.class);
+					InputStream content = basicHttpResponse.getEntity().getContent();
+
+					Matrix matrix = objectMapper.readValue(content, Matrix.class);
+
+					content.close();
+					
+					responseConsumer.close();
 
 					deferredResult.setResult(matrixHelper.multiply(m.getLeft(), matrix));
 				} catch (Exception e) {
@@ -85,6 +100,7 @@ public class MatrixResourceV3Impl {
 
 			@Override
 			public void failed(Exception exception) {
+
 				deferredResult.setErrorResult(exception);
 			}
 		});
@@ -102,7 +118,6 @@ public class MatrixResourceV3Impl {
 		request.addHeader("Content-Type", "application/json");
 
 		StringEntity entity = new StringEntity(operationAsString);
-		// entity.setChunked(false);
 
 		request.setEntity(entity);
 

@@ -49,7 +49,7 @@ public class MatrixResourceV3Impl implements MatrixResourceV3 {
 
 	@Autowired
 	private ObjectMapper objectMapper;
-	
+
 	@Autowired
 	private StatsWriter statsWriter;
 
@@ -57,11 +57,14 @@ public class MatrixResourceV3Impl implements MatrixResourceV3 {
 	@RequestMapping(value = POWER, method = RequestMethod.POST)
 	public void power(@Suspended AsyncResponse asyncresponse, final Pair<Matrix, Integer> m) throws Exception {
 
+		statsWriter.increment();
 		statsWriter.write();
-		
+
 		asyncresponse.setTimeout(3000, TimeUnit.MILLISECONDS);
-		
+
 		if (m.getRight() == 1) {
+			
+			statsWriter.decrement();
 			asyncresponse.resume(m.getLeft());
 			return;
 		}
@@ -74,12 +77,16 @@ public class MatrixResourceV3Impl implements MatrixResourceV3 {
 
 			@Override
 			public void cancelled() {
+				
+				statsWriter.decrement();
 				asyncresponse.resume(new Exception("cancelled"));
 
 			}
 
 			@Override
 			public void completed(HttpResponse arg0) {
+				
+				statsWriter.decrement();
 				BasicHttpResponse basicHttpResponse = (BasicHttpResponse) arg0;
 
 				try {
@@ -93,6 +100,8 @@ public class MatrixResourceV3Impl implements MatrixResourceV3 {
 
 			@Override
 			public void failed(Exception exception) {
+				
+				statsWriter.decrement();
 				asyncresponse.resume(exception);
 
 			}

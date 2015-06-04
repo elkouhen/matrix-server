@@ -11,20 +11,11 @@ import reactor.spring.context.config.EnableReactor;
 
 @EnableAutoConfiguration
 @EnableReactor
-// @EnableAdminServer
-// @EnableDiscoveryClient
 @ComponentScan("com.softeam")
 public class Application {
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext cac = SpringApplication.run(Application.class, args);
+		SpringApplication.run(Application.class, args);
 
-		cac.addApplicationListener(new ApplicationListener<ContextClosedEvent>() {
-
-			@Override
-			public void onApplicationEvent(ContextClosedEvent event) {
-
-			}
-		});
 	}
 }

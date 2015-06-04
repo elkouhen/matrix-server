@@ -36,4 +36,14 @@ public class StatsWriter {
 			statsDClient.gauge("systemCpuLoad", (long) (100 * unixOperatingSystem.getSystemCpuLoad()));
 		}
 	}
+
+	public void increment() {
+		
+		statsDClient.increment("requestCount");
+	}
+
+	public void decrement() {
+		statsDClient.decrement("requestCount");
+		
+	}
 }

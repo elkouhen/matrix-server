@@ -16,7 +16,7 @@ public class StatsWriter {
 	private StatsDClient statsDClient;
 
 	public void write() {
-		statsDClient.gauge("threadCount", ManagementFactory.getThreadMXBean().getThreadCount());
+		statsDClient.gauge("threadCount", Thread.activeCount());
 
 		OperatingSystemMXBean operatingSystemMXBean = ManagementFactory.getOperatingSystemMXBean();
 
@@ -34,6 +34,8 @@ public class StatsWriter {
 			statsDClient.gauge("availableProcessors", unixOperatingSystem.getAvailableProcessors());
 			statsDClient.gauge("processCpuLoad", (long) (100 * unixOperatingSystem.getProcessCpuLoad()));
 			statsDClient.gauge("systemCpuLoad", (long) (100 * unixOperatingSystem.getSystemCpuLoad()));
+
 		}
 	}
+
 }

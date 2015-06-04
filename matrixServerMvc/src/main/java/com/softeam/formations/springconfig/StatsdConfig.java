@@ -9,8 +9,11 @@ import com.timgroup.statsd.StatsDClient;
 @Configuration
 public class StatsdConfig {
 
+	
 	@Bean
 	public StatsDClient statsdClient() {
-		return new NonBlockingStatsDClient("com.softeam", "localhost", 8125);
+		NonBlockingStatsDClient nonBlockingStatsDClient = new NonBlockingStatsDClient("com.softeam", "localhost", 8125);
+		
+		return nonBlockingStatsDClient;
 	}
 }
