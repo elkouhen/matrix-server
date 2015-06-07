@@ -1,13 +1,8 @@
 package com.softeam.formations.resources;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -36,7 +31,7 @@ import com.softeam.formations.statsd.StatsWriter;
 @RequestMapping(value = MatrixResourceV3Impl.RESOURCE + MatrixResourceV3Impl.VERSION, method = RequestMethod.POST)
 public class MatrixResourceV3Impl {
 
-	public static final String HOST = "http://localhost:8080";
+	public static final String HOST = "http://localhost:8081";
 	public static final String RESOURCE = "/matrix/";
 	public static final String VERSION = "V3";
 	public static final String POWER = "/power";
@@ -56,13 +51,16 @@ public class MatrixResourceV3Impl {
 	@RequestMapping(value = POWER, method = RequestMethod.POST)
 	public DeferredResult<Matrix> power(@RequestBody final Pair<Matrix, Integer> m) throws Exception {
 
+		statsWriter.increment();
 		statsWriter.write();
 
 		final DeferredResult<Matrix> deferredResult = new DeferredResult<Matrix>();
 
 		if (m.getRight() == 1) {
 
+			statsWriter.decrement();
 			deferredResult.setResult(m.getLeft());
+
 			return deferredResult;
 		}
 
@@ -76,11 +74,14 @@ public class MatrixResourceV3Impl {
 			@Override
 			public void cancelled() {
 
-				deferredResult.setErrorResult(new Exception("cancelled"));
+				// statsWriter.decrement();
+				// deferredResult.setErrorResult(new Exception("cancelled"));
 			}
 
 			@Override
 			public void completed(HttpResponse httpResponse) {
+				statsWriter.decrement();
+
 				BasicHttpResponse basicHttpResponse = (BasicHttpResponse) httpResponse;
 
 				try {
@@ -89,7 +90,7 @@ public class MatrixResourceV3Impl {
 					Matrix matrix = objectMapper.readValue(content, Matrix.class);
 
 					content.close();
-					
+
 					responseConsumer.close();
 
 					deferredResult.setResult(matrixHelper.multiply(m.getLeft(), matrix));
@@ -101,7 +102,8 @@ public class MatrixResourceV3Impl {
 			@Override
 			public void failed(Exception exception) {
 
-				deferredResult.setErrorResult(exception);
+				// statsWriter.decrement();
+				// deferredResult.setErrorResult(exception);
 			}
 		});
 
@@ -121,6 +123,6 @@ public class MatrixResourceV3Impl {
 
 		request.setEntity(entity);
 
-		return HttpAsyncMethods.create(new HttpHost(InetAddress.getLocalHost(), 8080), request);
+		return HttpAsyncMethods.create(new HttpHost(InetAddress.getLocalHost(), 8081), request);
 	}
 }

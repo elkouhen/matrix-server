@@ -15,7 +15,19 @@ public class StatsWriter {
 	@Autowired
 	private StatsDClient statsDClient;
 
+	private static int nbUsers = 0;
+
+	public void increment() {
+		nbUsers++;
+	}
+
+	public void decrement() {
+		nbUsers--;
+	}
+
 	public void write() {
+		statsDClient.gauge("userCount", nbUsers);
+
 		statsDClient.gauge("threadCount", Thread.activeCount());
 
 		OperatingSystemMXBean operatingSystemMXBean = ManagementFactory.getOperatingSystemMXBean();
@@ -34,7 +46,6 @@ public class StatsWriter {
 			statsDClient.gauge("availableProcessors", unixOperatingSystem.getAvailableProcessors());
 			statsDClient.gauge("processCpuLoad", (long) (100 * unixOperatingSystem.getProcessCpuLoad()));
 			statsDClient.gauge("systemCpuLoad", (long) (100 * unixOperatingSystem.getSystemCpuLoad()));
-
 		}
 	}
 
