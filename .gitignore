@@ -6,3 +6,4 @@ gradle
 *.iml
 *.classpath
 *.project
+.metadata
