@@ -10,14 +10,11 @@ class AsyncScenario extends Simulation {
   //val appContext = "/matrixServerCxf/services/rest/matrix/"
   val appContext = "/matrix/"
   val version = "V3"
-  val resource = "/power"
-
   val scn = scenario("AsyncSimulation")
     .exec(http("request")
-      .post(appContext + version + resource)
+      .post(appContext + version + "/power")
       .body(StringBody("""{"right": 2, "left": {"nx": "3", "data": [1, 0, 0, 0, 1, 0, 0, 0, 1]}}""")).asJSON)
 
   setUp(
-    scn.inject(
-      rampUsers(500) over (2 minutes))).protocols(httpConf)
+    scn.inject(users(50).ramp(10))).protocols(httpConf)
 }

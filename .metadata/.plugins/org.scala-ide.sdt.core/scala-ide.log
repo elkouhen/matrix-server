@@ -1,0 +1,104 @@
+2015-06-08 22:05:53,242 ERROR [main] - System.err - SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2015-06-08 22:05:53,242 ERROR [main] - System.err - SLF4J: Defaulting to no-operation (NOP) logger implementation
+2015-06-08 22:05:53,242 ERROR [main] - System.err - SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+2015-06-08 22:06:24,607  WARN [main] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:24,608  WARN [main] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:25,795  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:25,796  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:25,877 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:25,897  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:25,897  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:25,907 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:25,949 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:25,953  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:25,953  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:26,002 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:26,015  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:26,015  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:26,057 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:26,061  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:26,061  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:26,103 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:26,106  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:26,106  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:26,145 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:26,364  WARN [Worker-19] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:26,364  WARN [Worker-19] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:26,407 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:27,288  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:27,289  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:27,326 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:27,329  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:27,329  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:27,364 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:27,368  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:27,368  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:27,404 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:27,406  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:27,406  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:27,442 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:27,445  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:27,445  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:27,479 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:27,669  WARN [Worker-6] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:27,669  WARN [Worker-6] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:27,700 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:29,983  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:29,983  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:30,021 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:30,024  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:30,024  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:30,056 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:30,059  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:30,059  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:30,088 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:30,091  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:30,091  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:30,121 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:30,124  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:30,124  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:30,153 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:30,417  WARN [Worker-1] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:30,418  WARN [Worker-1] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:30,500 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:31,775  WARN [main] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:31,776  WARN [main] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:31,810  WARN [main] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:31,810  WARN [main] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:31,864  WARN [main] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:31,864  WARN [main] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:31,898  WARN [main] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:31,898  WARN [main] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:31,933  WARN [main] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:31,933  WARN [main] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:31,990 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:31,991 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:31,991 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:31,991 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:31,991 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:32,657  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:32,657  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:32,687  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:32,687  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:32,715  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:32,715  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:32,743  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:32,743  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:32,770  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:32,770  WARN [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:32,839 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:32,839 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:32,840 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:32,840 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:32,840 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:06:33,064  WARN [Worker-1] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:06:33,064  WARN [Worker-1] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:06:33,441 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - scala.reflect.internal.MissingRequirementError: object scala in compiler mirror not found.
+2015-06-08 22:08:38,589  WARN [main] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:08:38,590  WARN [main] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:10:34,514  WARN [main] - ScalaProject - Project matrixPerf has platform default sourceLevel.
+2015-06-08 22:10:34,514  WARN [main] - ScalaProject - Project matrixPerf runs on platform default installation.
+2015-06-08 22:37:13,246  WARN [main] - ScalaProject - Project   has platform default sourceLevel.
+2015-06-08 22:37:13,246  WARN [main] - ScalaProject - Project   runs on platform default installation.
+2015-06-08 22:43:03,383  WARN [main] - ScalaProject - Project   has platform default sourceLevel.
+2015-06-08 22:43:03,383  WARN [main] - ScalaProject - Project   runs on platform default installation.
