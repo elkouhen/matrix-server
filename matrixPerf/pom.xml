@@ -3,8 +3,8 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>io.gatling</groupId>
-	<artifactId>gatling-maven-plugin-demo</artifactId>
+	<groupId>com.softeam.matrixProject</groupId>
+	<artifactId>matrixPerf</artifactId>
 	<version>2.1.6</version>
 
 	<properties>
@@ -36,6 +36,7 @@
 					</execution>
 				</executions>
 				<configuration>
+					<configFolder>src/main/resources/</configFolder>
 					<dataFolder>src/test/resources</dataFolder>
 				</configuration>
 			</plugin>
