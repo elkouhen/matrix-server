@@ -28,55 +28,55 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Configuration
 public class RestTemplateConfig {
 
-	@Bean
-	public ExecutorService executorService() {
-		return Executors.newFixedThreadPool(10);
+    @Bean
+    public ExecutorService executorService() {
+        return Executors.newFixedThreadPool(10);
 
-	}
+    }
 
-	@Bean
-	public CloseableHttpAsyncClient asyncHttpClient() throws IOReactorException {
+    @Bean
+    public CloseableHttpAsyncClient asyncHttpClient() throws IOReactorException {
 
-		HttpAsyncClientBuilder builder = HttpAsyncClients.custom();
+        HttpAsyncClientBuilder builder = HttpAsyncClients.custom();
 
-		CloseableHttpAsyncClient httpclient = builder.build();
+        CloseableHttpAsyncClient httpclient = builder.build();
 
-		httpclient.start();
+        httpclient.start();
 
-		return httpclient;
-	}
+        return httpclient;
+    }
 
-	@Bean
-	public AsyncRestTemplate asyncRestTemplate() throws IOReactorException {
-		return new AsyncRestTemplate(asyncHttpRequestFactory());
-	}
+    @Bean
+    public AsyncRestTemplate asyncRestTemplate() throws IOReactorException {
+        return new AsyncRestTemplate(asyncHttpRequestFactory());
+    }
 
-	@Bean
-	public HttpClient httpClient() {
+    @Bean
+    public HttpClient httpClient() {
 
-		HttpClientConnectionManager poolingConnManager = new PoolingHttpClientConnectionManager();
-		CloseableHttpClient client = HttpClients.custom().setConnectionManager(poolingConnManager).build();
+        HttpClientConnectionManager poolingConnManager = new PoolingHttpClientConnectionManager();
+        CloseableHttpClient client = HttpClients.custom().setConnectionManager(poolingConnManager).build();
 
-		return client;
-	}
+        return client;
+    }
 
-	@Bean
-	public AsyncClientHttpRequestFactory asyncHttpRequestFactory() throws IOReactorException {
-		return new HttpComponentsAsyncClientHttpRequestFactory(asyncHttpClient());
-	}
+    @Bean
+    public AsyncClientHttpRequestFactory asyncHttpRequestFactory() throws IOReactorException {
+        return new HttpComponentsAsyncClientHttpRequestFactory(asyncHttpClient());
+    }
 
-	@Bean
-	public HttpComponentsClientHttpRequestFactory httpRequestFactory() {
-		return new HttpComponentsClientHttpRequestFactory(httpClient());
-	}
+    @Bean
+    public HttpComponentsClientHttpRequestFactory httpRequestFactory() {
+        return new HttpComponentsClientHttpRequestFactory(httpClient());
+    }
 
-	@Bean
-	public ObjectMapper objectMapper() {
-		return new ObjectMapper();
-	}
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
+    }
 
-	@Bean
-	public RestTemplate restTemplate() {
-		return new RestTemplate(httpRequestFactory());
-	}
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate(httpRequestFactory());
+    }
 }

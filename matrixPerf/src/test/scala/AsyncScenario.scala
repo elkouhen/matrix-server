@@ -19,7 +19,8 @@ class AsyncScenario extends Simulation {
 
   setUp(
     scn.inject(
-        //rampUsersPerSec(1) to (2) during (2 minutes)
-        constantUsersPerSec(100) during(2 minutes)
-        )).protocols(httpConf)
+      //rampUsersPerSec(1) to (2) during (2 minutes)
+      constantUsersPerSec(100) during (2 minutes)
+    )
+  ).protocols(httpConf)
 }

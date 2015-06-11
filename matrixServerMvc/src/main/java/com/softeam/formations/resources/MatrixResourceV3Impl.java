@@ -31,98 +31,99 @@ import com.softeam.formations.statsd.StatsWriter;
 @RequestMapping(value = MatrixResourceV3Impl.RESOURCE + MatrixResourceV3Impl.VERSION, method = RequestMethod.POST)
 public class MatrixResourceV3Impl {
 
-	public static final String HOST = "http://localhost:8081";
-	public static final String RESOURCE = "/matrix/";
-	public static final String VERSION = "V3";
-	public static final String POWER = "/power";
+    public static final int PORT = 8081;
+    public static final String HOST = "http://localhost";
+    public static final String RESOURCE = "/matrix/";
+    public static final String VERSION = "V3";
+    public static final String POWER = "/power";
 
-	@Autowired
-	private MatrixHelper matrixHelper;
+    @Autowired
+    private MatrixHelper matrixHelper;
 
-	@Autowired
-	private CloseableHttpAsyncClient httpClient;
+    @Autowired
+    private CloseableHttpAsyncClient httpClient;
 
-	@Autowired
-	private ObjectMapper objectMapper;
+    @Autowired
+    private ObjectMapper objectMapper;
 
-	@Autowired
-	private StatsWriter statsWriter;
+    @Autowired
+    private StatsWriter statsWriter;
 
-	@RequestMapping(value = POWER, method = RequestMethod.POST)
-	public DeferredResult<Matrix> power(@RequestBody final Pair<Matrix, Integer> m) throws Exception {
+    @RequestMapping(value = POWER, method = RequestMethod.POST)
+    public DeferredResult<Matrix> power(@RequestBody final Pair<Matrix, Integer> m) throws Exception {
 
-		statsWriter.increment();
-		statsWriter.write();
+        statsWriter.increment();
+        statsWriter.write();
 
-		final DeferredResult<Matrix> deferredResult = new DeferredResult<Matrix>();
+        final DeferredResult<Matrix> deferredResult = new DeferredResult<Matrix>();
 
-		if (m.getRight() == 1) {
+        if (m.getRight() == 1) {
 
-			statsWriter.decrement();
-			deferredResult.setResult(m.getLeft());
+            statsWriter.decrement();
+            deferredResult.setResult(m.getLeft());
 
-			return deferredResult;
-		}
+            return deferredResult;
+        }
 
-		final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(m.getLeft(), m.getRight() - 1);
+        final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(m.getLeft(), m.getRight() - 1);
 
-		HttpAsyncRequestProducer requestProducer = requestProducer(operation, objectMapper);
+        HttpAsyncRequestProducer requestProducer = requestProducer(operation, objectMapper);
 
-		BasicAsyncResponseConsumer responseConsumer = new BasicAsyncResponseConsumer();
-		httpClient.execute(requestProducer, responseConsumer, new FutureCallback<HttpResponse>() {
+        BasicAsyncResponseConsumer responseConsumer = new BasicAsyncResponseConsumer();
+        httpClient.execute(requestProducer, responseConsumer, new FutureCallback<HttpResponse>() {
 
-			@Override
-			public void cancelled() {
-
-				// statsWriter.decrement();
-				// deferredResult.setErrorResult(new Exception("cancelled"));
-			}
-
-			@Override
-			public void completed(HttpResponse httpResponse) {
-				statsWriter.decrement();
-
-				BasicHttpResponse basicHttpResponse = (BasicHttpResponse) httpResponse;
-
-				try {
-					InputStream content = basicHttpResponse.getEntity().getContent();
-
-					Matrix matrix = objectMapper.readValue(content, Matrix.class);
-
-					content.close();
-
-					responseConsumer.close();
-
-					deferredResult.setResult(matrixHelper.multiply(m.getLeft(), matrix));
-				} catch (Exception e) {
-					deferredResult.setErrorResult(e);
-				}
-			}
-
-			@Override
-			public void failed(Exception exception) {
+            @Override
+            public void cancelled() {
 
 				// statsWriter.decrement();
-				// deferredResult.setErrorResult(exception);
-			}
-		});
+                // deferredResult.setErrorResult(new Exception("cancelled"));
+            }
 
-		return deferredResult;
-	}
+            @Override
+            public void completed(HttpResponse httpResponse) {
+                statsWriter.decrement();
 
-	private HttpAsyncRequestProducer requestProducer(final Pair<Matrix, Integer> operation, ObjectMapper objectMapper) throws UnsupportedEncodingException,
-			Exception {
-		String operationAsString = objectMapper.writeValueAsString(operation);
+                BasicHttpResponse basicHttpResponse = (BasicHttpResponse) httpResponse;
 
-		HttpPost request = new HttpPost(HOST + RESOURCE + VERSION + POWER);
+                try {
+                    InputStream content = basicHttpResponse.getEntity().getContent();
 
-		request.addHeader("Accept", "application/json");
-		request.addHeader("Content-Type", "application/json");
+                    Matrix matrix = objectMapper.readValue(content, Matrix.class);
 
-		StringEntity entity = new StringEntity(operationAsString);
+                    content.close();
 
-		request.setEntity(entity);
+                    responseConsumer.close();
 
-		return HttpAsyncMethods.create(new HttpHost(InetAddress.getLocalHost(), 8081), request);
-	}
+                    deferredResult.setResult(matrixHelper.multiply(m.getLeft(), matrix));
+                } catch (Exception e) {
+                    deferredResult.setErrorResult(e);
+                }
+            }
+
+            @Override
+            public void failed(Exception exception) {
+
+				// statsWriter.decrement();
+                // deferredResult.setErrorResult(exception);
+            }
+        });
+
+        return deferredResult;
+    }
+
+    private HttpAsyncRequestProducer requestProducer(final Pair<Matrix, Integer> operation, ObjectMapper objectMapper) throws UnsupportedEncodingException,
+            Exception {
+        String operationAsString = objectMapper.writeValueAsString(operation);
+
+        HttpPost request = new HttpPost(HOST + ':' + PORT + RESOURCE + VERSION + POWER);
+
+        request.addHeader("Accept", "application/json");
+        request.addHeader("Content-Type", "application/json");
+
+        StringEntity entity = new StringEntity(operationAsString);
+
+        request.setEntity(entity);
+
+        return HttpAsyncMethods.create(new HttpHost(InetAddress.getLocalHost(), PORT), request);
+    }
 }

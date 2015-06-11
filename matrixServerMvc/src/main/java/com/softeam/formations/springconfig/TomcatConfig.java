@@ -8,16 +8,17 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class TomcatConfig {
-	@Bean
-	public EmbeddedServletContainerFactory servletContainer() {
-		TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
 
-		Connector connector = new Connector("org.apache.coyote.http11.Http11Nio2Protocol");
-		connector.setPort(8081);
-		//connector.setAsyncTimeout(60000);
+    @Bean
+    public EmbeddedServletContainerFactory servletContainer() {
+        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
 
-		tomcat.addAdditionalTomcatConnectors(connector);
+        Connector connector = new Connector("org.apache.coyote.http11.Http11Nio2Protocol");
+        connector.setPort(8081);
+        //connector.setAsyncTimeout(60000);
 
-		return tomcat;
-	}
+        tomcat.addAdditionalTomcatConnectors(connector);
+
+        return tomcat;
+    }
 }

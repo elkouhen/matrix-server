@@ -19,33 +19,33 @@ import com.softeam.formations.statsd.StatsWriter;
 @RequestMapping(value = MatrixResourceV1Impl.RESOURCE + MatrixResourceV1Impl.VERSION)
 public class MatrixResourceV1Impl {
 
-	public static final String HOST = "http://localhost:8080";
-	public static final String RESOURCE = "/matrix/";
-	public static final String VERSION = "V1";
-	public static final String POWER = "/power";
+    public static final String HOST = "http://localhost:8080";
+    public static final String RESOURCE = "/matrix/";
+    public static final String VERSION = "V1";
+    public static final String POWER = "/power";
 
-	@Autowired
-	private RestTemplate restTemplate;
+    @Autowired
+    private RestTemplate restTemplate;
 
-	@Autowired
-	private MatrixHelper matrixHelper;
-	
-	@Autowired
-	private StatsWriter statsWriter;
+    @Autowired
+    private MatrixHelper matrixHelper;
 
-	@RequestMapping(value = POWER, method = RequestMethod.POST)
-	public Matrix power(@RequestBody final Pair<Matrix, Integer> m) {
-		
-		statsWriter.write();
+    @Autowired
+    private StatsWriter statsWriter;
 
-		if (m.getRight() == 1) {
-			return m.getLeft();
-		}
+    @RequestMapping(value = POWER, method = RequestMethod.POST)
+    public Matrix power(@RequestBody final Pair<Matrix, Integer> m) {
 
-		final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(m.getLeft(), m.getRight() - 1);
+        statsWriter.write();
 
-		ResponseEntity<Matrix> response = restTemplate.exchange(HOST + RESOURCE + VERSION + POWER, HttpMethod.POST, new HttpEntity<Object>(operation), Matrix.class);
+        if (m.getRight() == 1) {
+            return m.getLeft();
+        }
 
-		return matrixHelper.multiply(m.getLeft(), response.getBody());
-	}
+        final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(m.getLeft(), m.getRight() - 1);
+
+        ResponseEntity<Matrix> response = restTemplate.exchange(HOST + RESOURCE + VERSION + POWER, HttpMethod.POST, new HttpEntity<Object>(operation), Matrix.class);
+
+        return matrixHelper.multiply(m.getLeft(), response.getBody());
+    }
 }

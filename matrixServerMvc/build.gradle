@@ -10,48 +10,51 @@ sourceCompatibility=1.8
 targetCompatibility=1.8
 
 buildscript {
-	dependencies {
+    dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.4.RELEASE")
     }
     
-	repositories {
-		mavenCentral()
-		jcenter()
-	}
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
 }
 
 sourceCompatibility=1.8
 targetCompatibility=1.8
 
 repositories {
-  	maven { url 'http://repo.spring.io/libs-release' }
-  	mavenLocal()
-  	mavenCentral()
+    maven { url 'http://repo.spring.io/libs-release' }
+    mavenLocal()
+    mavenCentral()
   
 }
 
 dependencies {
 
-  	compile 'com.softeam.matrixProject:matrixModel:1.0.0'
-  	compile('org.springframework.boot:spring-boot-starter-web') {
-      //exclude module: 'spring-boot-starter-tomcat'
-	} 
+    compile 'com.softeam.matrixProject:matrixModel:1.0.0'
+    compile('org.springframework.boot:spring-boot-starter-web:1.2.4.RELEASE') {
+        //exclude module: 'spring-boot-starter-tomcat'
+    } 
+	
+    //compile 'org.springframework.boot:spring-boot-starter-undertow:1.2.4.RELEASE'
+	
 
-	compile 'javax.el:javax.el-api:2.2.4'
-	compile 'ch.qos.logback:logback-classic:1.1.2'
-	compile 'org.springframework.boot:spring-boot-starter-actuator'
-	compile 'org.springframework:spring-web:4.1.5.RELEASE'
-	compile 'org.springframework:spring-context-support:4.1.5.RELEASE'
-	compile 'io.reactivex:rxjava:1.0.0'
-	compile 'org.apache.httpcomponents:httpasyncclient:4.1'
-	compile 'io.projectreactor:reactor-core:2.0.1.RELEASE'
-	compile 'io.projectreactor:reactor-stream:2.0.1.RELEASE'
-	compile 'io.projectreactor:reactor-bus:2.0.1.RELEASE'
-	compile 'io.projectreactor.spring:reactor-spring-context:2.0.1.RELEASE'
-	compile 'com.timgroup:java-statsd-client:3.0.1'
+    compile 'javax.el:javax.el-api:2.2.4'
+    compile 'ch.qos.logback:logback-classic:1.1.2'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.springframework:spring-web:4.1.5.RELEASE'
+    compile 'org.springframework:spring-context-support:4.1.5.RELEASE'
+    compile 'io.reactivex:rxjava:1.0.0'
+    compile 'org.apache.httpcomponents:httpasyncclient:4.1'
+    compile 'io.projectreactor:reactor-core:2.0.1.RELEASE'
+    compile 'io.projectreactor:reactor-stream:2.0.1.RELEASE'
+    compile 'io.projectreactor:reactor-bus:2.0.1.RELEASE'
+    compile 'io.projectreactor.spring:reactor-spring-context:2.0.1.RELEASE'
+    compile 'com.timgroup:java-statsd-client:3.0.1'
 }
 
 
 springBoot {
- mainClass = 'com.softeam.formations.application.Application'
+    mainClass = 'com.softeam.formations.application.Application'
 }

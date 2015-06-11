@@ -36,101 +36,101 @@ import com.softeam.formations.statsd.StatsWriter;
 @RequestMapping(value = MatrixResourceV4Impl.RESOURCE + MatrixResourceV4Impl.VERSION, method = RequestMethod.POST)
 public class MatrixResourceV4Impl {
 
-	public static final String HOST = "http://localhost:8080";
-	public static final String RESOURCE = "/matrix/";
-	public static final String VERSION = "V4";
-	public static final String POWER = "/power";
+    public static final String HOST = "http://localhost:8080";
+    public static final String RESOURCE = "/matrix/";
+    public static final String VERSION = "V4";
+    public static final String POWER = "/power";
 
-	@Autowired
-	private MatrixHelper matrixHelper;
+    @Autowired
+    private MatrixHelper matrixHelper;
 
-	@Autowired
-	private CloseableHttpAsyncClient httpClient;
+    @Autowired
+    private CloseableHttpAsyncClient httpClient;
 
-	@Autowired
-	private ExecutorService threadPoolExecutor;
-	
-	@Autowired
-	private StatsWriter statsWriter;
+    @Autowired
+    private ExecutorService threadPoolExecutor;
 
-	@Autowired
-	private ObjectMapper objectMapper;
+    @Autowired
+    private StatsWriter statsWriter;
 
-	private Observable<? super HttpResponse> makeRequest(final Pair<Matrix, Integer> operation, HttpAsyncRequestProducer requestProducer) {
+    @Autowired
+    private ObjectMapper objectMapper;
 
-		return Observable.create(new OnSubscribe<HttpResponse>() {
+    private Observable<? super HttpResponse> makeRequest(final Pair<Matrix, Integer> operation, HttpAsyncRequestProducer requestProducer) {
 
-			@Override
-			public void call(Subscriber<? super HttpResponse> subscriber) {
+        return Observable.create(new OnSubscribe<HttpResponse>() {
 
-				httpClient.execute(requestProducer, new BasicAsyncResponseConsumer(), new FutureCallback<HttpResponse>() {
+            @Override
+            public void call(Subscriber<? super HttpResponse> subscriber) {
 
-					@Override
-					public void cancelled() {
+                httpClient.execute(requestProducer, new BasicAsyncResponseConsumer(), new FutureCallback<HttpResponse>() {
 
-					}
+                    @Override
+                    public void cancelled() {
 
-					@Override
-					public void completed(HttpResponse response) {
+                    }
 
-						subscriber.onNext(response);
-						subscriber.onCompleted();
-					}
+                    @Override
+                    public void completed(HttpResponse response) {
 
-					@Override
-					public void failed(Exception exception) {
-						subscriber.onError(exception);
-					}
-				});
-			}
-		});
-	}
+                        subscriber.onNext(response);
+                        subscriber.onCompleted();
+                    }
 
-	@RequestMapping(value = POWER, method = RequestMethod.POST)
-	public DeferredResult<Matrix> power(@RequestBody final Pair<Matrix, Integer> m) throws Exception {
+                    @Override
+                    public void failed(Exception exception) {
+                        subscriber.onError(exception);
+                    }
+                });
+            }
+        });
+    }
 
-		statsWriter.write();
-		
-		final DeferredResult<Matrix> deferredResult = new DeferredResult<Matrix>();
+    @RequestMapping(value = POWER, method = RequestMethod.POST)
+    public DeferredResult<Matrix> power(@RequestBody final Pair<Matrix, Integer> m) throws Exception {
 
-		if (m.getRight() == 1) {
-			deferredResult.setResult(m.getLeft());
-			return deferredResult;
-		}
+        statsWriter.write();
 
-		final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(m.getLeft(), m.getRight() - 1);
+        final DeferredResult<Matrix> deferredResult = new DeferredResult<Matrix>();
 
-		HttpAsyncRequestProducer requestProducer = requestProducer(operation, objectMapper);
+        if (m.getRight() == 1) {
+            deferredResult.setResult(m.getLeft());
+            return deferredResult;
+        }
 
-		makeRequest(operation, requestProducer)//
-				.map(httpResponse -> {
-					BasicHttpResponse basicHttpResponse = (BasicHttpResponse) httpResponse;
-					Matrix matrix = null;
-					try {
-						matrix = objectMapper.readValue(basicHttpResponse.getEntity().getContent(), Matrix.class);
+        final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(m.getLeft(), m.getRight() - 1);
 
-					} catch (Exception e) {
+        HttpAsyncRequestProducer requestProducer = requestProducer(operation, objectMapper);
 
-					}
+        makeRequest(operation, requestProducer)//
+                .map(httpResponse -> {
+                    BasicHttpResponse basicHttpResponse = (BasicHttpResponse) httpResponse;
+                    Matrix matrix = null;
+                    try {
+                        matrix = objectMapper.readValue(basicHttpResponse.getEntity().getContent(), Matrix.class);
 
-					return matrix;
-				})//
-				.subscribeOn(Schedulers.from(threadPoolExecutor)).subscribe(matrix -> deferredResult.setResult(matrix));
+                    } catch (Exception e) {
 
-		return deferredResult;
-	}
+                    }
 
-	private HttpAsyncRequestProducer requestProducer(final Pair<Matrix, Integer> operation, ObjectMapper objectMapper) throws UnsupportedEncodingException,
-			Exception {
-		String operationAsString = objectMapper.writeValueAsString(operation);
+                    return matrix;
+                })//
+                .subscribeOn(Schedulers.from(threadPoolExecutor)).subscribe(matrix -> deferredResult.setResult(matrix));
 
-		HttpPost request = new HttpPost(HOST + RESOURCE + VERSION + POWER);
+        return deferredResult;
+    }
 
-		request.addHeader("Accept", "application/json");
-		request.addHeader("Content-Type", "application/json");
+    private HttpAsyncRequestProducer requestProducer(final Pair<Matrix, Integer> operation, ObjectMapper objectMapper) throws UnsupportedEncodingException,
+            Exception {
+        String operationAsString = objectMapper.writeValueAsString(operation);
 
-		request.setEntity(new StringEntity(operationAsString));
+        HttpPost request = new HttpPost(HOST + RESOURCE + VERSION + POWER);
 
-		return HttpAsyncMethods.create(new HttpHost(InetAddress.getLocalHost(), 8080), request);
-	}
+        request.addHeader("Accept", "application/json");
+        request.addHeader("Content-Type", "application/json");
+
+        request.setEntity(new StringEntity(operationAsString));
+
+        return HttpAsyncMethods.create(new HttpHost(InetAddress.getLocalHost(), 8080), request);
+    }
 }

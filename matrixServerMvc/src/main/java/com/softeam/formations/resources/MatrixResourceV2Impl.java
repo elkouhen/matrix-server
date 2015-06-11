@@ -23,51 +23,51 @@ import com.softeam.formations.statsd.StatsWriter;
 @RequestMapping(value = MatrixResourceV2Impl.RESOURCE + MatrixResourceV2Impl.VERSION, method = RequestMethod.POST)
 public class MatrixResourceV2Impl {
 
-	public static final String HOST = "http://localhost:8080";
-	public static final String RESOURCE = "/matrix/";
-	public static final String VERSION = "V2";
-	public static final String POWER = "/power";
+    public static final String HOST = "http://localhost:8080";
+    public static final String RESOURCE = "/matrix/";
+    public static final String VERSION = "V2";
+    public static final String POWER = "/power";
 
-	private static final Logger logger = LoggerFactory.getLogger(MatrixResourceV2Impl.class);
+    private static final Logger logger = LoggerFactory.getLogger(MatrixResourceV2Impl.class);
 
-	@Autowired
-	private AsyncRestTemplate restTemplate;
+    @Autowired
+    private AsyncRestTemplate restTemplate;
 
-	@Autowired
-	private MatrixHelper matrixHelper;
+    @Autowired
+    private MatrixHelper matrixHelper;
 
-	@Autowired
-	private StatsWriter statsWriter;
+    @Autowired
+    private StatsWriter statsWriter;
 
-	@RequestMapping(value = POWER, method = RequestMethod.POST)
-	public DeferredResult<Matrix> power(@RequestBody final Pair<Matrix, Integer> m) {
+    @RequestMapping(value = POWER, method = RequestMethod.POST)
+    public DeferredResult<Matrix> power(@RequestBody final Pair<Matrix, Integer> m) {
 
-		statsWriter.write();
+        statsWriter.write();
 
-		final DeferredResult<Matrix> deferredResult = new DeferredResult<Matrix>();
+        final DeferredResult<Matrix> deferredResult = new DeferredResult<Matrix>();
 
-		if (m.getRight() == 1) {
-			deferredResult.setResult(m.getLeft());
-			return deferredResult;
-		}
+        if (m.getRight() == 1) {
+            deferredResult.setResult(m.getLeft());
+            return deferredResult;
+        }
 
-		final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(m.getLeft(), m.getRight() - 1);
+        final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(m.getLeft(), m.getRight() - 1);
 
-		restTemplate.exchange(HOST + RESOURCE + VERSION + POWER, HttpMethod.POST, new HttpEntity<Object>(operation), Matrix.class).addCallback(
-				new ListenableFutureCallback<ResponseEntity<Matrix>>() {
-					@Override
-					public void onFailure(Throwable ex) {
+        restTemplate.exchange(HOST + RESOURCE + VERSION + POWER, HttpMethod.POST, new HttpEntity<Object>(operation), Matrix.class).addCallback(
+                new ListenableFutureCallback<ResponseEntity<Matrix>>() {
+                    @Override
+                    public void onFailure(Throwable ex) {
 
-						logger.error(ex.getMessage());
-						deferredResult.setErrorResult(ex.getMessage());
-					}
+                        logger.error(ex.getMessage());
+                        deferredResult.setErrorResult(ex.getMessage());
+                    }
 
-					@Override
-					public void onSuccess(ResponseEntity<Matrix> response) {
-						deferredResult.setResult(matrixHelper.multiply(m.getLeft(), response.getBody()));
-					}
-				});
+                    @Override
+                    public void onSuccess(ResponseEntity<Matrix> response) {
+                        deferredResult.setResult(matrixHelper.multiply(m.getLeft(), response.getBody()));
+                    }
+                });
 
-		return deferredResult;
-	}
+        return deferredResult;
+    }
 }

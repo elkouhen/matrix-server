@@ -34,92 +34,92 @@ import com.softeam.formations.statsd.StatsWriter;
 @RequestMapping(value = MatrixResourceV5Impl.RESOURCE + MatrixResourceV5Impl.VERSION, method = RequestMethod.POST)
 public class MatrixResourceV5Impl {
 
-	public static final String HOST = "http://localhost:8080";
-	public static final String RESOURCE = "/matrix/";
-	public static final String VERSION = "V5";
-	public static final String POWER = "/power";
+    public static final String HOST = "http://localhost:8080";
+    public static final String RESOURCE = "/matrix/";
+    public static final String VERSION = "V5";
+    public static final String POWER = "/power";
 
-	@Autowired
-	private MatrixHelper matrixHelper;
+    @Autowired
+    private MatrixHelper matrixHelper;
 
-	@Autowired
-	private CloseableHttpAsyncClient httpClient;
+    @Autowired
+    private CloseableHttpAsyncClient httpClient;
 
-	@Autowired
-	private ExecutorService threadPoolExecutor;
+    @Autowired
+    private ExecutorService threadPoolExecutor;
 
-	@Autowired
-	private ObjectMapper objectMapper;
-	
-	@Autowired
-	private StatsWriter statsWriter;
+    @Autowired
+    private ObjectMapper objectMapper;
 
-	@RequestMapping(value = POWER, method = RequestMethod.POST)
-	public DeferredResult<Matrix> power(@RequestBody final Pair<Matrix, Integer> m) throws Exception {
+    @Autowired
+    private StatsWriter statsWriter;
 
-		statsWriter.write();
-		
-		final DeferredResult<Matrix> deferredResult = new DeferredResult<Matrix>();
+    @RequestMapping(value = POWER, method = RequestMethod.POST)
+    public DeferredResult<Matrix> power(@RequestBody final Pair<Matrix, Integer> m) throws Exception {
 
-		if (m.getRight() == 1) {
-			deferredResult.setResult(m.getLeft());
-			return deferredResult;
-		}
+        statsWriter.write();
 
-		final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(m.getLeft(), m.getRight() - 1);
+        final DeferredResult<Matrix> deferredResult = new DeferredResult<Matrix>();
 
-		HttpAsyncRequestProducer requestProducer = requestProducer(operation, objectMapper);
+        if (m.getRight() == 1) {
+            deferredResult.setResult(m.getLeft());
+            return deferredResult;
+        }
 
-		Broadcaster<Matrix> broadcaster = Broadcaster.create();
+        final Pair<Matrix, Integer> operation = new Pair<Matrix, Integer>(m.getLeft(), m.getRight() - 1);
 
-		Stream<Matrix> map = broadcaster//
-				.map(matrix -> matrixHelper.multiply(m.getLeft(), matrix));
+        HttpAsyncRequestProducer requestProducer = requestProducer(operation, objectMapper);
 
-		map//
-		.consume(matrix -> deferredResult.setResult(matrix));
+        Broadcaster<Matrix> broadcaster = Broadcaster.create();
 
-		httpClient.execute(requestProducer, new BasicAsyncResponseConsumer(), new FutureCallback<HttpResponse>() {
+        Stream<Matrix> map = broadcaster//
+                .map(matrix -> matrixHelper.multiply(m.getLeft(), matrix));
 
-			@Override
-			public void cancelled() {
-				//broadcaster.on
+        map//
+                .consume(matrix -> deferredResult.setResult(matrix));
 
-			}
+        httpClient.execute(requestProducer, new BasicAsyncResponseConsumer(), new FutureCallback<HttpResponse>() {
 
-			@Override
-			public void completed(HttpResponse arg0) {
-				BasicHttpResponse basicHttpResponse = (BasicHttpResponse) arg0;
+            @Override
+            public void cancelled() {
+                //broadcaster.on
 
-				try {
-					Matrix matrix = objectMapper.readValue(basicHttpResponse.getEntity().getContent(), Matrix.class);
+            }
 
-					broadcaster.onNext(matrix);
-					broadcaster.onComplete();
-				} catch (Exception e) {
-					broadcaster.onError(e);
-				}
-			}
+            @Override
+            public void completed(HttpResponse arg0) {
+                BasicHttpResponse basicHttpResponse = (BasicHttpResponse) arg0;
 
-			@Override
-			public void failed(Exception ex) {
-				broadcaster.onError(ex);
-			}
-		});
+                try {
+                    Matrix matrix = objectMapper.readValue(basicHttpResponse.getEntity().getContent(), Matrix.class);
 
-		return deferredResult;
-	}
+                    broadcaster.onNext(matrix);
+                    broadcaster.onComplete();
+                } catch (Exception e) {
+                    broadcaster.onError(e);
+                }
+            }
 
-	private HttpAsyncRequestProducer requestProducer(final Pair<Matrix, Integer> operation, ObjectMapper objectMapper) throws UnsupportedEncodingException,
-			Exception {
-		String operationAsString = objectMapper.writeValueAsString(operation);
+            @Override
+            public void failed(Exception ex) {
+                broadcaster.onError(ex);
+            }
+        });
 
-		HttpPost request = new HttpPost(HOST + RESOURCE + VERSION + POWER);
+        return deferredResult;
+    }
 
-		request.addHeader("Accept", "application/json");
-		request.addHeader("Content-Type", "application/json");
+    private HttpAsyncRequestProducer requestProducer(final Pair<Matrix, Integer> operation, ObjectMapper objectMapper) throws UnsupportedEncodingException,
+            Exception {
+        String operationAsString = objectMapper.writeValueAsString(operation);
 
-		request.setEntity(new StringEntity(operationAsString));
+        HttpPost request = new HttpPost(HOST + RESOURCE + VERSION + POWER);
 
-		return HttpAsyncMethods.create(new HttpHost(InetAddress.getLocalHost(), 8080), request);
-	}
+        request.addHeader("Accept", "application/json");
+        request.addHeader("Content-Type", "application/json");
+
+        request.setEntity(new StringEntity(operationAsString));
+
+        return HttpAsyncMethods.create(new HttpHost(InetAddress.getLocalHost(), 8080), request);
+    }
 }

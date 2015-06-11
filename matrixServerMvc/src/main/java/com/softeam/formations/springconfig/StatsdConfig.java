@@ -9,11 +9,10 @@ import com.timgroup.statsd.StatsDClient;
 @Configuration
 public class StatsdConfig {
 
-	
-	@Bean
-	public StatsDClient statsdClient() {
-		NonBlockingStatsDClient nonBlockingStatsDClient = new NonBlockingStatsDClient("com.softeam", "localhost", 8125);
-		
-		return nonBlockingStatsDClient;
-	}
+    @Bean
+    public StatsDClient statsdClient() {
+        NonBlockingStatsDClient nonBlockingStatsDClient = new NonBlockingStatsDClient("com.softeam", "localhost", 8125);
+
+        return nonBlockingStatsDClient;
+    }
 }
